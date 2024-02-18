@@ -278,6 +278,30 @@ export default function Products() {
 
 
 
+<br><br>
+<br><br>
+
+## Nested Dynamic Routes
+- Check
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
