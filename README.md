@@ -201,24 +201,79 @@ _______________________________________________________
 - Next.js has a file system based route mechanism
   - This means urls that can be accessed from client are the folder structure
 
+<br><br>
  
 ## Conventions
-- All routes must be placed inside of src/app folder
+- All routes must be placed inside of src/app folder (page.tsx)
   - The folder src/app must always exists
 - Files that correspons to a route must be name page.js or page.tsx
 - Every folder corresponds to a path segment in the browser URL
 
+<br><br>
+<br><br>
 
+## Nested Routing
+- https://www.youtube.com/watch?v=mEral6yz130&list=PLC3y8-rFHvwjOKd6gdf4QtV1uYNiQnruI&index=6
 
+- Create e.g. src/app/blog/page.tsx
+```javascript
+export default function Blog() {
+  return (
+    <h1>Blog</h1>
+  );
+}
+```
+  - Create nested folders and related page.tsx
+    - src/app/blog/first/page.tsx
+    ```javascript
+    export default function FirstBlog() {
+      return (
+        <h1>First Blog</h1>
+      );
+    }
+    ```
+    - src/app/blog/second/page.tsx
+    ```javascript
+    export default function SecondBlog() {
+      return (
+        <h1>Second Blog</h1>
+      );
+    }
+    ```
+    
+<br><br>
+<br><br>
 
+## Dynamic Routes
+- https://www.youtube.com/watch?v=N4-EkNJ6RFM&list=PLC3y8-rFHvwjOKd6gdf4QtV1uYNiQnruI&index=7
+- Is used when want to handle multiple entries e.g. 100 diferent product pages and you do not want to use nested routing for this
+- [] are used to define dynamic routes
+  - **Name inside of the brackets must be equal to params e.g. params.productId**
 
-
-
-
-
-
-
-
+- Create e.g. src/app/products/page.tsx
+```
+export default function Products() {
+  return (
+    <>
+      <h1>Product List</h1>
+      
+      <h2>Product 1</h2>
+      <h2>Product 2</h2>
+      <h2>Product 3</h2>
+    </>
+  );
+}
+```
+  - Create folder src/app/products/[productId]/page.tsx
+  ```
+  export default function ProductsId({ params }) {
+    return (
+      <>
+        <h1>Product Id: { params.productId }</h1>
+      </>
+    );
+  }
+  ```
 
 
 
