@@ -284,6 +284,7 @@ export default function Products() {
 <br><br>
 
 ## Nested Dynamic Routes
+- https://www.youtube.com/watch?v=Vn4p4K6_M44&list=PLC3y8-rFHvwjOKd6gdf4QtV1uYNiQnruI&index=8&pp=iAQB
 - Check Dynamic Routes before https://github.com/CyberT33N/next.js-cheat-sheet/blob/main/README.md#dynamic-routes
 
 - Create e.g. src/app/products/[productId]/reviews/[reviewId]/page.tsx
@@ -305,11 +306,58 @@ export default function ReviewsId({ params }: {
 
 
 
+<br><br>
+<br><br>
 
+## Catch-all Segments
+- https://www.youtube.com/watch?v=Ssw6-69KLRo&list=PLC3y8-rFHvwjOKd6gdf4QtV1uYNiQnruI&index=9
+- [...NameHere] in your folder name will be used to catch all segments
+- This is usefully e.g. for documentation where you have hundreds of pages but you want the same layout
+```
+localhost:3000/docs/feature1/concept1
+localhost:3000/docs/feature1/concept2
+localhost:3000/docs/feature2/concept1
+localhost:3000/docs/feature2/concept2
 
+20 Features x 20 Concepts = 400
+20 Features x 1 [conceptId] = 20
+1 [featureId] x 1 [conceptId] = 1
+```
 
+- Create e.g. src/app/docs/[...slug]/page.tsx
+```javascript
+export default function Docs({ params }: {
+     params: { slug: string[] }
+}) {
+     // http://localhost:3000/docs/test/apple
+     if (params.slug?.length === 2) {
+          return (
+          <h1>
+               View Docs for feature : { params.slug[0]} and concept: {params.slug[1] }
+          </h1>
+          )
+     } else if (params.slug?.length === 1) {
+          // http://localhost:3000/docs/test
+          return (
+          <h1>
+               View Docs for feature : { params.slug[0] }
+          </h1>
+          )
+     }
 
+     // http://localhost:3000/docs/test/apple/third
+     return <h1>Docs Home Page</h1>
+   }
+```
+  - This means you will create a base page file which will be used in every path you open with contains under docs e.g.:
+    - http://localhost:3000/docs/test
+    - http://localhost:3000/docs/test/more
+   
+  - http://localhost:3000/docs/test so the param /test would be the feature params.slug[0]
+    -  http://localhost:3000/docs/test/apple so the /apple would be the concept params.slug[1] 
 
+  - In the Catch-all Segments example from above this url would be 404 http://localhost:3000/docs
+    - You can allow it with [[]] e.g. Create e.g. src/app/docs/[[...slug]]/page.tsx which will redirect to the page.tsx
 
 
 
