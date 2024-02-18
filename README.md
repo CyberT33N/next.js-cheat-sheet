@@ -251,7 +251,7 @@ export default function Blog() {
   - **Name inside of the brackets must be equal to params e.g. params.productId**
 
 - Create e.g. src/app/products/page.tsx
-```
+```javascript
 export default function Products() {
   return (
     <>
@@ -265,8 +265,10 @@ export default function Products() {
 }
 ```
   - Create folder src/app/products/[productId]/page.tsx
-  ```
-  export default function ProductsId({ params }) {
+  ```javascript
+  export default function ProductsId({ params }: {
+    params: { productId: string }
+  }) {
     return (
       <>
         <h1>Product Id: { params.productId }</h1>
@@ -282,9 +284,20 @@ export default function Products() {
 <br><br>
 
 ## Nested Dynamic Routes
-- Check
+- Check Dynamic Routes before https://github.com/CyberT33N/next.js-cheat-sheet/blob/main/README.md#dynamic-routes
 
-
+- Create e.g. src/app/products/[productId]/reviews/[reviewId]/page.tsx
+```javascript
+export default function ReviewsId({ params }: {
+  params: { reviewsId: string, productId: string }
+}) {
+  return (
+    <>
+      <h1> Review { params.reviewsId } for product { params.productId } </h1>
+    </>
+  );
+}
+```
 
 
 
