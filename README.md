@@ -363,6 +363,77 @@ export default function Docs({ params }: {
 
 
 
+<br><br>
+<br><br>
+
+## 404
+
+<br><br>
+
+## default custom not found page
+- For default next.js will give you an 404 page. If you want to customize it create src/app/not-found.tsx
+```javascript
+export default function NotFound() {
+   return <h1>404 - Not found..</h1>
+}
+```
+
+<br><br>
+
+## notFound()
+- If needed you can call the default next.js page at a specific point like e.g. at pagination when not items where found anymore
+```javascript
+import { notFound } from 'next/navigation'
+
+export default function ReviewsId({ params }: {
+  params: { reviewsId: string, productId: string }
+}) {
+  if (parseInt(params.reviewsId) > 1000) {
+    notFound()
+  }
+
+  return (
+    <>
+      <h1> Review { params.reviewsId } for product { params.productId } </h1>
+    </>
+  );
+}
+```
+  - If you want to use a custom 404 page then create a not-found.tsx inside of the folder where you call notFound() - In this case:
+    - src/app/products/[productId]/reviews/[reviewsId]/not-found.tsx
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -388,7 +459,10 @@ export default function Home() {
   );
 }
 ```
-
+- Only the content of this file is sended to the app router.
+  - This means if you would create a file file called src/app/dashboard/test.tsx and then visit localhost:3000/dashboard you would get an 404
+- You must export an default function or you will get an error when visiting the route
+- Only the code inside of the default function will be returned/rendered to the client. This means you can create components inside of this file or in a different location and then import them in your page.tsx file and use them inside the default function
 
 # layout.tsx
 - This file will be automatically created when you load the root route
