@@ -662,6 +662,11 @@ _______________________________________________________
 
 # Layouts (layout.tsx)
 - A layout is UI that is shared between multiple pages
+
+<br><br>
+<br><br>
+
+## Root Layout (src/app/layout.tsx)
 - This component should accept a children pop that will be populated with a child page during rendering
 - children of RootLayout will refer to default component in page.tsx
 
@@ -708,4 +713,33 @@ export default function RootLayout({
 }
 ```
   - children will be replace by src/app/page.tsx
-  - You can call any route like e.g. localhost:3000/anyPage and the root layout will be loaded. 
+  - You can call any route like e.g. localhost:3000/anyPage and the root layout will be loaded.
+    - This means if you have the file localhost:3000/anyPage/page.tsx then this will be used for the children replacement
+
+
+<br><br>
+<br><br>
+
+## Nested Layout (src/app/anyPage/layout.tsx)
+- You can create more custom nested layout.tsx to any page like e.g. src/app/anyPage/layout.tsx
+  - However, the root layout will be always loaded first and the nested layout will extend from it. **But the children from src/app/page.tsx will be ignored an instead it will be loaded from your page.tsx location where you put you nested layout.tsx**
+```javascript
+/**
+ * Root layout component.
+ *
+ * @param {React.ReactNode} children - The child components to render.
+ * @returns {JSX.Element} The rendered root layout.
+ */
+export default function AboutLayout({
+    children
+}: {
+   children: React.ReactNode;
+ }) {
+    return (
+        <>
+            {children}
+            <h2>Any Text</h2>
+        </>
+    )
+}
+```
