@@ -494,3 +494,136 @@ export default function RootLayout({
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+_______________________________________________________
+_______________________________________________________
+
+<br><br>
+<br><br>
+
+
+# Private Folders
+- Should not be considered by the routing system
+  - Also subfolder are excluded from the routing
+
+- Prefix the folder with underscore e.g. src/app/_lib
+  - If you want to include underscore in URL segments you can prefix the folder name with "%5F" which is the URL-encoded from an underscore
+
+- Usefully for seperating UI logic from routing logic
+  - Organazing internal files accross a project
+  - Avoid potention name conflicts with futre next.js files
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+_______________________________________________________
+_______________________________________________________
+
+<br><br>
+<br><br>
+
+# Route Groups
+- Allows us to logically group our routes and project files without affecting the UTL path structure
+- It is usefully to grouo components and make it more easy to work with or to structure for yourself or other developers
+
+1. As example create the folders src/app/login, src/app/register & src/app/forgot-password
+
+2. Create components
+- src/app/auth/register/page.tsx
+```javascript
+export default function Register() {
+  return <h1> Register </h1>
+}
+```
+  - localhost:3000/auth/register
+
+- src/app/auth/login/page.tsx
+```javascript
+export default function Login() {
+  return <h1> Login </h1>
+}
+```
+  - localhost:3000/auth/login
+
+- src/app/auth/forgot-password/page.tsx
+```javascript
+export default function ForgotPassword() {
+  return <h1> Forgot Password </h1>
+}
+```
+  - localhost:3000/auth/forgot-password
+
+3. If you do want to have /auth in your url you can rename the folder to:
+- src/app/(auth)
+  - After this you still have route grouping but you can call:
+    - localhost:3000/register
+    - localhost:3000/login
+    - localhost:3000/forgot-password
