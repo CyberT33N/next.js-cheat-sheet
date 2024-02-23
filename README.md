@@ -743,3 +743,64 @@ export default function AboutLayout({
     )
 }
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+## Route Group Layout
+
+1. Create src/app/(auth)/(with-auth-layout)
+
+2. Move register & login folder into src/app/(auth)/with-auth-layout
+  - src/app/(auth)/(with-auth-layout)/register/page.tsx
+  - src/app/(auth)/(with-auth-layout)/login/page.tsx
+
+3. Create src/app/(auth)/(with-auth-layout)/layout.tsx
+```javascript
+/**
+ * Root layout component.
+ *
+ * @param {React.ReactNode} children - The child components to render.
+ * @returns {JSX.Element} The rendered root layout.
+ */
+export default function AuthLayout({
+    children
+}: {
+    children: React.ReactNode;
+  }) {
+    return (
+        <div>     
+            <h2>Inner Layout</h2>
+            {children}
+        </div> 
+    )
+}
+```
+- If you visit http://localhost:3000/login or http://localhost:3000/register you will notice:
+  - Layout of group will be loaded - src/app/(auth)/(with-auth-layout)/layout.tsx
+  - The page.tsx will of login will be loaded because there we require the children from
+
+- If you visit http://localhost:3000/forgot-password then the layout group will be not loaded because the foder is only inside of (auth)
