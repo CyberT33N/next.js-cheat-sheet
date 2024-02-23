@@ -993,6 +993,7 @@ export default function About() {
 
 ## Dynamic metadata object
 - We define the generateMetadata function for this case
+- You can not export the generateMetadata function and the default metadata together
 ```javascript
 import { Metadata } from 'next'
 
