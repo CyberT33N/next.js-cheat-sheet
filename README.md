@@ -1,4 +1,4 @@
-# next.js-cheat-sheet
+# next.js Cheat Sheet
 
 <br><br>
 
