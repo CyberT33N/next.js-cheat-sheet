@@ -1521,6 +1521,9 @@ export default function OrderProduct() {
         // router.push('/blog') // In this example we use / as root for router.push('/') put you can use any route segment for and href link component you have defined in other files
 
         // router.replace('/') // If needed you can also use router.replace('/'). This is equal to the replace tag in your link component where you clear the history for going back
+
+        // router.back() // Will go back to the previous page
+        // router.forward() // Will go to the next page
     }
 
     return (
