@@ -1927,3 +1927,44 @@ export default function ErrorBoundary({ error }: { error: Error
 ```
 
 
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+## Recovering from Errors
+- In some cases you may want to retry if an error occurs. As example if you fetch data. For this case you can use reset:
+```javascript
+'use client'
+
+/**
+ * Error page.
+ * @returns {JSX.Element} JSX element representing the Error page.
+ */
+export default function ErrorBoundary({
+    error, reset
+}: {
+    error: Error,
+    reset: () => void
+}) {
+    return (
+        <div>
+            <h1>Error: {error.message}</h1>
+            <br></br>
+            <button onClick={reset}>Try again</button>
+        </div>
+    )
+}
+```
+- In page.ts you woudl have to set 'use client'
+
+
