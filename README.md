@@ -1363,3 +1363,83 @@ export default function Products() {
 	}
     ```
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+
+### Active Links
+- If you have e.g. an navbar and you want to add custom css to the current active route segment you can use usePathname()
+
+<br><br>
+  
+In this example we included Tailwind to style.css
+```javascript
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+<br><br>
+
+And then added to src/app/(auth)/layout.tsx
+- In order to use usePathname() client-side we must 'use client' at the top
+```javascript
+'use client'
+
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import './style.css'
+
+const navLinks = [
+    { name: 'Register', href: '/register' },
+    { name: 'Login', href: '/login' },
+    { name: 'Forgot Password', href: '/forgot-password' }
+]
+
+/**
+ * Renders the layout for the authentication pages.
+ * 
+ * @param {Object} props - The component props.
+ * @param {React.ReactNode} props.children - The child components to render.
+ * @returns {React.ReactNode} The rendered layout component.
+ */
+export default function AuthLayout({
+    children
+}: {
+  children: React.ReactNode;
+}) {
+    const pathname = usePathname()
+
+    return (
+        <div>
+            {navLinks.map(link => {
+                const isActive = pathname.startsWith(link.href)
+
+                return (
+                    <Link href={link.href}
+                        key={link.name}
+                        className={isActive ? 'font-bold mr-4' : 'text-blue-500 mr-4'}>
+                        {link.name}
+                    </Link>
+                )
+            })}
+        </div>
+    )
+}
+```
+- If you visit localhost:3000/register you will see the Register link will be bold because it is the active route segment
