@@ -118,21 +118,16 @@ _______________________________________________________
 
 #### layout.tsx
 - https://github.com/CyberT33N/next.js-cheat-sheet/blob/main/README.md#layouts-layouttsx
-- ui that can be shared through different pages in your app
-- children of RootLayout will refer to default component in page.tsx
 
 <br><br>
 
 #### page.tsx
 - https://github.com/CyberT33N/next.js-cheat-sheet/blob/main/README.md#page-pagetsx
-- basicly same as index.html
-- Auto refresh when you save changes
 
 <br><br>
 
 #### template.tsx
-- basicly same as index.html
-- Auto refresh when you save changes
+- https://github.com/CyberT33N/next.js-cheat-sheet/blob/main/README.md#page-pagetsx
 
 
 
