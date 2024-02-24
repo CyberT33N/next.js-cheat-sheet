@@ -1538,3 +1538,133 @@ export default function OrderProduct() {
 - In this example we use / as root for router.push('/') put you can use any route segment for and href link component you have defined in other files
 - If needed you can also use router.replace('/'). This is equal to the replace tag in your link component where you clear the history for going back
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+_______________________________________________________
+_______________________________________________________
+
+<br><br>
+<br><br>
+
+
+
+
+
+## Templates
+- Templates are similar to layouts in that they wrap each child layout or page
+
+- But, with templates, when a user navigates between routes that share a template, a new instance of the component is mounted, DOM elements are recreated, state is not preserved, and effects are re-synchronized
+
+- A template can be defined by exporting a default React component from a template.js or template.tsx file
+
+- Similar to layouts, templates also should accept a children prop which will render the nested segments in the route.
+
+
+
+
+
+<br><br>
+<br><br>
+
+### Example not using Template
+- If you define e.g. an input button in your src/app/(auth)/layout.tsx then the state will bis pre-served when you would enter something inside of the input and then switch the side to e.g. from route localhost:3000/register to reout localhost:3000/login
+  - This is because layout only represents the content of the currently loaded page and common elements will be keeped untouched
+  - layouts do not re-mount shared components which will result in better performance
+```javascript
+'use client'
+
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import './style.css'
+import { useState } from 'react'
+
+const navLinks = [
+    { name: 'Register', href: '/register' },
+    { name: 'Login', href: '/login' },
+    { name: 'Forgot Password', href: '/forgot-password' }
+]
+
+/**
+ * Renders the layout for the authentication pages.
+ * 
+ * @param {Object} props - The component props.
+ * @param {React.ReactNode} props.children - The child components to render.
+ * @returns {React.ReactNode} The rendered layout component.
+ */
+export default function AuthLayout({
+    children
+}: {
+  children: React.ReactNode;
+}) {
+    const pathname = usePathname()
+    const [input, setInput] = useState('')
+
+    return (
+        <div>
+            <div>
+                <input
+                    type="text"
+                    value={input}
+                    onChange={e => setInput(e.target.value)}
+                />
+                <button onClick={() => console.log(input)}>Search</button>
+            </div>
+
+            {navLinks.map(link => {
+                const isActive = pathname.startsWith(link.href)
+
+                return (
+                    <Link href={link.href}
+                        key={link.name}
+                        className={isActive ? 'font-bold mr-4' : 'text-blue-500 mr-4'}>
+                        {link.name}
+                    </Link>
+                )
+            })}
+        </div>
+    )
+}
+```
+
+<br><br>
+<br><br>
+
+### Example template
+- Rename layout.tsx to template.tsx
+  - Use the same code from above at "Example not using Template"
+    - As you can see now the state is no pre-served anymore and the input field is cleared because an new instance will be created
+
+- **You can use layout.tsx and template.tsx together**
+  - They layout.tsx renders first and children will be replaced by the components exported of the template.tsx file
