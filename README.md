@@ -140,6 +140,11 @@ _______________________________________________________
 - https://github.com/CyberT33N/next.js-cheat-sheet/blob/main/README.md#loading-ui-loadingtsx
 
 
+<br><br>
+
+#### error.tsx
+- https://github.com/CyberT33N/next.js-cheat-sheet/blob/main/README.md#error-handling-errortsx
+
 
 
 
