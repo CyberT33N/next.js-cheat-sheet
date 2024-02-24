@@ -175,8 +175,31 @@ _______________________________________________________
 
 ### dev
 - Will execute src/app/layout.tsx
+```javascript
+"scripts": {
+    "dev": "next dev"
+}
+```
 
+<br><br>
 
+### build
+- Will build your application. In order to run it you must use the start run script
+```javascript
+"scripts": {
+    "build": "next build"
+}
+```
+
+<br><br>
+
+### start
+- Will start your application. In order to run it you must build the application before with build run script
+```javascript
+"scripts": {
+    "start": "next start"
+}
+```
 
 
 
@@ -1742,3 +1765,160 @@ export default async function Blog() {
 }
 ```
 - If you visit now http://localhost:3000/blog you will the loading text from loading.tsx until page.tsx is fully loaded
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+_______________________________________________________
+_______________________________________________________
+
+<br><br>
+<br><br>
+
+# Error Handling (error.tsx)
+- Will be wrapped around your related page.tsx 
+- Other components are still running and the app is not crashing and you can handle the error
+  - e.g. redirect or make a page reload
+
+
+<br><br>
+<br><br>
+
+## Example Hierarchy
+- Expecting you have thw following files:
+  - layout.js
+  - template.js
+  - error.js
+  - loading.js
+  - not-found.js
+  - page.js
+
+- You would have this layer Hierarchy for the handling:
+```javascript
+<Layout>
+  <Template>
+    <ErrorBoundary fallback={<Error />}>
+      <Suspense fallback={<Loading />}>
+        <ErrorBoundary fallback={<NotFound />}>
+          <Page />
+        </ErrorBoundary>
+      </Suspense>
+    </ErrorBoundary>
+  </Template>
+</Layout>
+```
+
+
+<br><br>
+<br><br>
+
+## Example without error handling
+- Image you throw an error e.g. in src/app/products/[productId]/reviews/[reviewId]/page.tsx
+```javascript
+import { notFound } from 'next/navigation'
+
+/**
+ * Generates a random integer between 0 and the specified count.
+ * @param {number} count - The upper bound for the random integer.
+ * @returns {number} The generated random integer.
+ */
+function getRandomInt(count: number) {
+    return Math.floor(Math.random() * count)
+}
+
+/**
+ * Renders the review page for a specific review ID and product ID.
+ * @param {Object} params - The parameters object containing the review ID and product ID.
+ * @param {string} params.reviewsId - The review ID.
+ * @param {string} params.productId - The product ID.
+ * @returns {JSX.Element} The rendered review page.
+ */
+export default function ReviewsId({ params }: {
+      params: { reviewsId: string, productId: string }
+   }) {
+    const random = getRandomInt(2)
+
+    if (random === 1) {
+        throw new Error('Random error')
+    }
+
+    if (parseInt(params.reviewsId) > 1000) {
+        notFound()
+    }
+
+    return (
+        <>
+            <h1> Review { params.reviewsId } for product { params.productId } </h1>
+        </>
+    )
+}
+```
+- In development mode you will see the error with full details when you visit http://localhost:3000/products/1/reviews/500
+  - If you build the application (npm run build) and then start the application (npm run start) you will see:
+  "Application error: a server-side exception has occurred (see the server logs for more information).
+Digest: 1685611821"
+    - Further details can then be seen in the terminal log
+
+- **The biggest problem is that your app will crash and other components are not available any more**
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+## Example with error handling
+- Create e.g. src/app/products/[productId]/reviews/[reviewId]/error.tsx
+```javascript
+'use client'
+
+/**
+ * Error page.
+ * @returns {JSX.Element} JSX element representing the Error page.
+ */
+export default function ErrorBoundary({ error }: { error: Error
+}) {
+    return <h1>Error message: {error.message}</h1>
+}
+```
+
+
