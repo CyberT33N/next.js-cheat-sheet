@@ -2003,3 +2003,83 @@ This means any error which happen in e.g. http://localhost:3000/products/1/revie
 
 **This also means if you place your error.tsx file in a parent directory then all nested segment layout.tsx files will not be loaded and ignored. Like e.g.:**
 - src/app/products/[productId]/layout.tsx
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+## Handling Errors in Layouts
+- An error.tsx file will handle error for all its nested child segments
+- The error boundary does not catch error error thrown in layouts because from the hierarchy it's nested inside the layouts component
+```javascript
+<Layout>
+  <Template>
+    <ErrorBoundary fallback={<Error />}>
+      <Suspense fallback={<Loading />}>
+        <ErrorBoundary fallback={<NotFound />}>
+          <Page />
+        </ErrorBoundary>
+      </Suspense>
+    </ErrorBoundary>
+  </Template>
+</Layout>
+```
+  - E.g. copy src/app/products/[productId]/reviews/[reviewId]/error.tsx to:
+    - src/app/products/[productId]/error.tsx
+
+  - Then similate an error in rc/app/products/[productId]/layout.tsx
+  ```javascript
+	  /**
+	 * Generates a random integer between 0 and the specified count.
+	 * @param {number} count - The upper bound for the random integer.
+	 * @returns {number} The generated random integer.
+	 */
+	function getRandomInt(count: number) {
+	    return Math.floor(Math.random() * count)
+	}
+
+
+	/**
+	 * Renders the layout for the product page.
+	 * @param {{ children: React.ReactNode }} props - The props object containing the 'children' property.
+	 * @returns {React.ReactNode} The rendered layout.
+	 */
+	export default function ProductLayout({
+	    children
+	}: {
+	   children: React.ReactNode;
+	 }) {
+	    const random = getRandomInt(2)
+
+	    if (random === 1) {
+	        throw new Error('Error loading product layout')
+	    }
+
+	    return (
+	        <>
+	            {children}
+	            <h2>Product Features</h2>
+	        </>
+	    )
+	}
+  ```
+  - **This means there will be no error handling because the layout.tsx file is in hierarchy higher than the error and the application will crash**
+    - In order to fix this hierarchy problem remove src/app/products/[productId]/error.tsx into:
+      - src/app/products/error.tsx
+        - Now the error will be catched and handled this is because the error.tsx file is higher than where the error occured in the layout.tsx file
