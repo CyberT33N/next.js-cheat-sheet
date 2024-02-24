@@ -137,7 +137,7 @@ _______________________________________________________
 <br><br>
 
 #### loading.tsx
-
+- https://github.com/CyberT33N/next.js-cheat-sheet/blob/main/README.md#loading-ui-loadingtsx
 
 
 
