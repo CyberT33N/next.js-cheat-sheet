@@ -1968,3 +1968,38 @@ export default function ErrorBoundary({
 - In page.ts you woudl have to set 'use client'
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+
+## Handling Errors in Nested Routes
+- Errors bubble up to the closed parent error boundary
+  - An error.tsx file will catch all errors from all nested child segements
+    - By positioning error.tsx files at different levels in the nested folders of a route, you can achieve a more granular level of error handling
+
+
+E.g. remove src/app/products/[productId]/reviews/[reviewdId]/error.tsx to:
+- src/app/products/error.tsx
+
+
+This means any error which happen in e.g. http://localhost:3000/products/1/reviews/* will bubble up to the nearest parent error.tsx in this case:
+- src/app/products/error.tsx
+
+**This also means if you place your error.tsx file in a parent directory then all nested segment layout.tsx files will not be loaded and ignored. Like e.g.:**
+- src/app/products/[productId]/layout.tsx
