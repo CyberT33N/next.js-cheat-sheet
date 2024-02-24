@@ -7,7 +7,34 @@
 
 <br><br>
 
-### Create app
+## Extensions
+- https://chromewebstore.google.com/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en&pli=1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+___________________________________________________
+___________________________________________________
+
+<br><br>
+<br><br>
+
+# Create app
 ```shell
 cd ~/Projects
 npx create-next-app@latest app-name-here
@@ -16,16 +43,16 @@ npx next telemetry disable
 
 <br><br>
 
-### Start app
+# Start app
 ```shell
 npm run dev
 ```
 
 
-### Telemetry
+# Telemetry
 - https://nextjs.org/telemetry
 
-#### Disable Telemetry
+## Disable Telemetry
 - Set this enmvironment variable
 ```
 # Method 1
@@ -34,6 +61,16 @@ npx next telemetry disable
 # Method #2
 NEXT_TELEMETRY_DISABLED=1
 ```
+
+
+
+
+
+
+
+
+
+
 
 
 
