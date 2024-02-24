@@ -1480,3 +1480,58 @@ export default function AuthLayout({
 }
 ```
 - If you visit localhost:3000/register you will see the Register link will be bold because it is the active route segment
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+
+### Navigating Programmatically
+- If you want that a user clicks on a button to place and order and if the order is successfully he get redirected back to home page you would create src/app/order-product/page.tsx
+```javascript
+'use client'
+
+import { useRouter } from 'next/navigation'
+
+/**
+ * Renders the Order Product page.
+ * @returns {JSX.Element} JSX element representing the Order Product page.
+ */
+export default function OrderProduct() {
+    const router = useRouter()
+
+    const handleClick = () => {
+        console.log('Placing your order..')
+        router.push('/')
+
+        // router.push('/blog') // In this example we use / as root for router.push('/') put you can use any route segment for and href link component you have defined in other files
+
+        // router.replace('/') // If needed you can also use router.replace('/'). This is equal to the replace tag in your link component where you clear the history for going back
+    }
+
+    return (
+        <>
+            <h1>Order Product</h1>
+            <button onClick={handleClick}>Place order</button>
+        </>
+    )
+}
+```
+- useRouter() only works client-side so we add 'use client' to the top
+- In this example we use / as root for router.push('/') put you can use any route segment for and href link component you have defined in other files
+- If needed you can also use router.replace('/'). This is equal to the replace tag in your link component where you clear the history for going back
+
