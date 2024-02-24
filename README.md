@@ -124,6 +124,7 @@ _______________________________________________________
 <br><br>
 
 #### page.tsx
+- https://github.com/CyberT33N/next.js-cheat-sheet/blob/main/README.md#page-pagetsx
 - basicly same as index.html
 - Auto refresh when you save changes
 
@@ -1566,7 +1567,7 @@ _______________________________________________________
 
 
 
-## Templates
+## Templates (template.tsx)
 - Templates are similar to layouts in that they wrap each child layout or page
 
 - But, with templates, when a user navigates between routes that share a template, a new instance of the component is mounted, DOM elements are recreated, state is not preserved, and effects are re-synchronized
