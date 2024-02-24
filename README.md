@@ -129,7 +129,14 @@ _______________________________________________________
 #### template.tsx
 - https://github.com/CyberT33N/next.js-cheat-sheet/blob/main/README.md#page-pagetsx
 
+<br><br>
 
+#### not-found.tsx
+- [https://github.com/CyberT33N/next.js-cheat-sheet/blob/main/README.md#page-pagetsx](https://github.com/CyberT33N/next.js-cheat-sheet/blob/main/README.md#404)
+
+<br><br>
+
+#### loading.tsx
 
 
 
@@ -1562,7 +1569,7 @@ _______________________________________________________
 
 
 
-## Templates (template.tsx)
+# Templates (template.tsx)
 - Templates are similar to layouts in that they wrap each child layout or page
 
 - But, with templates, when a user navigates between routes that share a template, a new instance of the component is mounted, DOM elements are recreated, state is not preserved, and effects are re-synchronized
@@ -1578,7 +1585,7 @@ _______________________________________________________
 <br><br>
 <br><br>
 
-### Example not using Template
+## Example not using Template
 - If you define e.g. an input button in your src/app/(auth)/layout.tsx then the state will bis pre-served when you would enter something inside of the input and then switch the side to e.g. from route localhost:3000/register to reout localhost:3000/login
   - This is because layout only represents the content of the currently loaded page and common elements will be keeped untouched
   - layouts do not re-mount shared components which will result in better performance
@@ -1641,10 +1648,97 @@ export default function AuthLayout({
 <br><br>
 <br><br>
 
-### Example template
+## Example template
 - Rename layout.tsx to template.tsx
   - Use the same code from above at "Example not using Template"
     - As you can see now the state is no pre-served anymore and the input field is cleared because an new instance will be created
 
 - **You can use layout.tsx and template.tsx together**
   - They layout.tsx renders first and children will be replaced by the components exported of the template.tsx file
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+_______________________________________________________
+_______________________________________________________
+
+<br><br>
+<br><br>
+
+# Loading UI (loading.tsx)
+- This file allows us to create loading states that are displayed to users while a specific route segments content is loading
+- The loading state appears immediately upon navigation, giving users the assurance that the application is responsive and actively loading content
+- **This file will wrap the page.tsx file and all it nested children**
+
+<br><br>
+
+## Benefits
+- You can display the loading state as soon as a user navigates to a new route. The immediate feedback reassures users that their action has been acknowledged, reduces perceived loading times, and makes the application feel more responsive.
+
+- Next.js allows the creation of shared layouts that remain interactive while new route segments are loading. Users can continue interacting with certain parts of the application, such as a navigation menu or sidebar, even if the main content is still being fetched
+
+<br><br>
+
+## Example
+1. Create e.g. src/app/blog/loading.tsx
+```javascript
+/**
+ * Renders the Loading page.
+ * @returns {JSX.Element} JSX element representing the Loading page.
+ */
+export default function Loading() {
+    return <h1>Loading</h1>
+}
+```
+
+2. Add timeout to your src/app/blog/page.tsx
+```javascript
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+    title: 'Blog'
+}
+
+/**
+ * Renders the Blog page.
+ * @returns {JSX.Element} JSX element representing the Blog page.
+ */
+export default async function Blog() {
+    await new Promise(resolve => setTimeout(resolve, 2000))
+
+    return (
+        <>
+            <h1>Blog</h1>
+        </>
+    )
+}
+```
+- If you visit now http://localhost:3000/blog you will the loading text from loading.tsx until page.tsx is fully loaded
