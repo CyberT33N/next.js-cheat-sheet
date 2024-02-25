@@ -2846,7 +2846,7 @@ export default function InterceptedF3() {
 ### (...)
 - Lets say we need to intercept `src/about/page.tsx` folder while navigating through the `src/app/f1/f4/page.tsx`
   - Create `src/f1/f4/(...)about/page.tsx`:
-  ````javascript
+  ```javascript
    /**
 	 * Renders the Intercepted About page.
 	 * @returns {JSX.Element} JSX element representing the Intercepted About page.
