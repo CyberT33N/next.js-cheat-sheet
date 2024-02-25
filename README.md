@@ -4,7 +4,8 @@
 
 ## Guides 
 - https://www.youtube.com/watch?v=kVddMV-TrSw&list=PLC3y8-rFHvwjOKd6gdf4QtV1uYNiQnruI&index=2
-
+  - https://github.com/gopinav/Next.js-14-Tutorials
+    
 <br><br>
 
 ## Extensions
