@@ -3467,3 +3467,149 @@ export async function GET() {
 }
 ```
 - To test open thunderclient ín vs code an make new request
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+
+
+
+## Handling POST Request
+- https://www.youtube.com/watch?v=pzPS7Fn-8tE&list=PLC3y8-rFHvwjOKd6gdf4QtV1uYNiQnruI&index=36
+
+- `src/app/comments/route.ts`
+```
+import { comments } from './data'
+
+/**
+ * Handles the POST request.
+ * @param {Request} req - The request object.
+ * @returns {Response} The response.
+ */
+export async function POST(req: Request) {
+    const comment = await req.json()
+    const newComment = {
+        id: comments.length + 1,
+        text: comment.text
+    }
+
+    comments.push(newComment)
+
+    return new Response(JSON.stringify(newComment), {
+        status: 201,
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+}
+```
+- Make POST with payload:
+	```javascript
+	{
+	  "text": "123"
+	}
+	```
+	- Response:
+	  ```
+	    {
+		  "id": 4,
+		  "text": "123"
+		}
+	  ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+__________________________________________________
+__________________________________________________
+<br><br>
+<br><br>
+
+
+## Dynamic Route Handlers
+- https://www.youtube.com/watch?v=TGbC8F0gjC8&list=PLC3y8-rFHvwjOKd6gdf4QtV1uYNiQnruI&index=36
+
+
+<br><br>
+
+- In order to get the document for a specific id we can do:
+  - Create `src/app/comments/[id]/route.ts`:
+```
+import { comments } from '../data'
+
+/**
+ * Handles the GET request.
+ * @param {Request} req - The request object.
+ * @returns {Response} The response with the message "Profile API data".
+ */
+export async function GET(
+    req: Request,
+    { params } : { params: { id: string }}
+) {
+    const comment = comments.find(comment => comment.id === Number(params.id))
+
+    return Response.json(comment)
+}
+```
+- GET http://localhost:3000/comments/1
+  - Response:
+	```javascript
+	{"id":1,"text":"This is the first comment"}
+	```
+
