@@ -151,6 +151,12 @@ _______________________________________________________
 
 
 
+<br><br>
+
+#### default.tsx
+- [https://github.com/CyberT33N/next.js-cheat-sheet/blob/main/README.md#error-handling-errortsx](https://github.com/CyberT33N/next.js-cheat-sheet/blob/main/README.md#defaulttsx)
+
+
 
 
 
