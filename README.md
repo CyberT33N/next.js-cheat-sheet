@@ -143,18 +143,21 @@ _______________________________________________________
 #### loading.tsx
 - https://github.com/CyberT33N/next.js-cheat-sheet/blob/main/README.md#loading-ui-loadingtsx
 
-
 <br><br>
 
 #### error.tsx
 - https://github.com/CyberT33N/next.js-cheat-sheet/blob/main/README.md#error-handling-errortsx
 
-
-
 <br><br>
 
 #### default.tsx
 - [https://github.com/CyberT33N/next.js-cheat-sheet/blob/main/README.md#error-handling-errortsx](https://github.com/CyberT33N/next.js-cheat-sheet/blob/main/README.md#defaulttsx)
+
+<br><br>
+
+#### route.ts
+- https://github.com/CyberT33N/next.js-cheat-sheet/blob/main/README.md#route-handlers-routets
+
 
 
 
