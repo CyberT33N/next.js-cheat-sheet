@@ -2629,3 +2629,256 @@ export default function DashboardLayout({
     )
 }
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+___________________________________
+___________________________________
+<br><br>
+
+
+
+
+
+## Intercepting Routes
+- Intercepting routes allow you to intercept or stop the default routing behaviour to present an alternate view or component when navigating through the UI, while still preserving the indended route for scenarious like page reload
+  - This can be useful if you want to show a route while keeping the context of the current page
+    - **This means if you want e.g. to open a image from a gallery within the same site on a modal box**
+    - If you reload the page or somebody opens this url directly then they will be redirected to the original component and not the inetrcepted
+
+<br><br>
+<br><br>
+
+### Conventions
+- (.) to match segments on the same level
+  - The folder must be on the same layer where the original folder is
+
+- (..) to match segments one level above
+
+- (..)(..) to match segments two level above
+
+- (...) to match segments from the root app directory
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+### (.)
+
+Create `src/app/f1/page.tsx`:
+```javascript
+import Link from 'next/link'
+
+/**
+ * Renders the F1 page.
+ * @returns {JSX.Element} JSX element representing the F1 page.
+ */
+export default function F1() {
+    return (
+        <>
+            <h1>F1 Page</h1>
+            <div>
+                <Link href="/f1/f2">F2</Link>
+            </div>
+        </>
+    )
+}
+```
+
+<br><br>
+<br><br>
+
+
+Create src/app/f1/f2/page.tsx:
+```javascript
+/**
+ * Renders the F2 page.
+ * @returns {JSX.Element} JSX element representing the F2 page.
+ */
+export default function F2() {
+    return <h1>F2</h1>
+}
+```
+
+
+<br><br>
+<br><br>
+
+Create src/app/f1/(.)f2/page.tsx:
+```javascript
+/**
+ * Renders the Intercepted F2 page.
+ * @returns {JSX.Element} JSX element representing the Intercepted F2 page.
+ */
+export default function InterceptedF2() {
+    return <h1>(.) Intercepted F2</h1>
+}
+```
+- If you visit now `http://localhost:3000/f1/f2` you can see that `src/app/f1/(.)f2/page.tsx` will intercept the route
+- **If you reload the page now you will see content of `src/app/f1/f2/page.tsx`**
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+
+### (..)
+
+<br><br>
+
+Create src/app/f3/page.tsx:
+```javascript
+/**
+ * Renders the F3 page.
+ * @returns {JSX.Element} JSX element representing the F3 page.
+ */
+export default function F3() {
+    return <h1>F3</h1>
+}
+```
+
+
+<br><br>
+<br><br>
+
+Create src/app/f1/f4/page.tsx:
+```javascript
+import Link from 'next/link'
+
+/**
+ * Renders the F4 page.
+ * @returns {JSX.Element} JSX element representing the F4 page.
+ */
+export default function F4() {
+    return (
+        <>
+            <h1>F4 Page</h1>
+            <div>
+                <Link href="/f1/f3">F3</Link>
+            </div>
+        </>
+    )
+}
+```
+
+<br><br>
+<br><br>
+
+Create src/app/f1/f4/(..)f3/page.tsx:
+```javascript
+/**
+ * Renders the Intercepted F3 page.
+ * @returns {JSX.Element} JSX element representing the Intercepted F3 page.
+ */
+export default function InterceptedF3() {
+    return <h1>(..) Intercepted F3</h1>
+}
+```
+- If you visit now `http://localhost:3000/f1/f4` you will see the content of `src/app/f1/f4/page.tsx`
+  - If you click on the f3 Link you will get intercepted by `src/app/f1/f4/(..)f3/page.tsx`
+- **If you reload the page now you will see content of `src/app/f1/f3/page.tsx`**
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+
+### (...)
+- Lets say we need to intercept `src/about/page.tsx` folder while navigating through the `src/app/f1/f4/page.tsx`
+  - Create `src/f1/f4/(...)about/page.tsx`:
+  ````javascript
+   /**
+	 * Renders the Intercepted About page.
+	 * @returns {JSX.Element} JSX element representing the Intercepted About page.
+	 */
+	export default function InterceptedAbout() {
+	    return <h1>(..) Intercepted About</h1>
+	}
+  ```
+
+  - Add Link to about:
+  ```javascript
+    import Link from 'next/link'
+  
+	/**
+	 * Renders the F4 page.
+	 * @returns {JSX.Element} JSX element representing the F4 page.
+	 */
+	export default function F4() {
+	    return (
+	        <>
+	            <h1>F4 Page</h1>
+	            <div>
+	                <Link href="/f1/f3">F3</Link>
+	                <Link href="/about">About</Link>
+	            </div>
+	        </>
+	    )
+	}
+  ```
+    - If you visit now `http://localhost:3000/f1/f4` you will see the content of `src/app/f1/f4/page.tsx`
+    - If you click on the about Link you will get intercepted by ``src/f1/f4/(...)about/page.tsx``
+    - **If you reload the page now you will see content of `src/app/about/page.tsx`**
+
+
+
