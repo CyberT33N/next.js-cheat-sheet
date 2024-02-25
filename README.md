@@ -2083,3 +2083,257 @@ This means any error which happen in e.g. http://localhost:3000/products/1/revie
     - In order to fix this hierarchy problem remove src/app/products/[productId]/error.tsx into:
       - src/app/products/error.tsx
         - Now the error will be catched and handled this is because the error.tsx file is higher than where the error occured in the layout.tsx file
+       
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+____________________________________________________
+____________________________________________________
+<br><br>
+<br><br>
+
+
+## Parallel Routes
+- Parallel routes are an advanced routing mechanism that akkiws for the simultaneous rendering of multiple pages withing the same layout
+  - Image you would build an dashboard with multiple components e.g.:
+    - Notifications
+    - User analytics
+    - Revenue metrics
+
+- Parallel routes are defined using a feature known as slots
+  - Slots help structure our content in a modular fashion
+  - To define a slot, we use the `@folder` naming convention
+  - Each slot in then passed as a prop to its corresponding `layout.tsx` file
+
+
+<br><br>
+
+### Benefits
+- A clear benefit is their ability to split a single layout into various slots, making the code more manageable
+- Independent route handling
+- Sub-navigation
+
+
+<br><br>
+
+
+### Independent route handling
+- Each slot of your layout, such as user analytics or revenue metrics, can have its own loading and error states
+- This granular control is particulary beneficial in scenarios where different sections of the page load at varying speeds or encounter unique errors
+
+
+<br><br>
+
+
+### Sub-navigation in routes
+- Each slot of your dashboard can essentially function as a mini-application, complete with its own navigation and state management
+- This is especially useful in a complex application such as our dashboard where different sections service disctinct purposes
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+### Example
+- Create src/app/complex-dashboard/layout.tsx
+```javascript
+/**
+ * Dashboard layout component.
+ *
+ * @param {Object} props - The component props.
+ * @param {React.ReactNode} props.children - The child components to render.
+ * @param {React.ReactNode} props.users - The users component to render.
+ * @param {React.ReactNode} props.revenue - The revenue component to render.
+ * @param {React.ReactNode} props.notifications - The notifications component to render.
+ * @returns {JSX.Element} The rendered Dashboard layout.
+ */
+export default function DashboardLayout({
+    children,
+    users,
+    revenue,
+    notifications
+}: {
+     children: React.ReactNode;
+     users: React.ReactNode;
+     revenue: React.ReactNode;
+     notifications: React.ReactNode;
+}) {
+    return (
+        <div>
+            <div>{children}</div>
+
+            <div style={{ display: ''flex }}>
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <div>{users}</div>
+                    <div>{revenue}</div>
+                </div>
+
+                <div style={{ display: 'flex', flex: 1 }}>
+                    <div>{notifications}</div>
+                </div>
+            </div>
+        </div>
+    )
+}
+```
+- children is equal to complex-dashboard/@children/page.tsx
+  - So technically e have 4 slots inside of our layout file
+
+
+<br><br>
+<br><br>
+
+- Create src/app/complex-dashboard/page.tsx
+```javascript
+/**
+ * Renders the Complex Dashboard page.
+ * @returns {JSX.Element} JSX element representing the Complex Dashboard page.
+ */
+export default function ComplexDashboardPage() {
+    return <h1>Complex Dashboard</h1>
+}
+```
+
+
+
+<br><br>
+<br><br>
+
+
+- Create src/components/card.tsx
+```javascript
+/**
+ * Renders a card component.
+ * @param {Object} props - The component props.
+ * @param {React.ReactNode} props.children - The content of the card.
+ * @returns {JSX.Element} The rendered card component.
+ */
+const Card = ({
+    children
+}: {
+       children: React.ReactNode
+}) => {
+    const cardStyle = {
+        padding: '100px',
+        margin: '10px',
+        boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2)',
+        border: '1px solid #ddd',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
+ 
+    return <div style={cardStyle}>{children}</div>
+}
+
+export default Card
+```
+
+
+
+<br><br>
+<br><br>
+
+#### Slots
+- Slots will not effect the url structure
+
+
+<br><br>
+
+- Create src/app/complex-dashboard/@notifications/page.tsx
+```javascript
+import Card from '@/components/card'
+
+/**
+ * Renders the Notifications page.
+ * @returns {JSX.Element} JSX element representing the Notifications page.
+ */
+export default function Notifications() {
+    return <Card>Notifications</Card>
+}
+```
+
+<br><br>
+
+- Create src/app/complex-dashboard/@revenue/page.tsx
+```javascript
+import Card from '@/components/card';
+
+/**
+ * Renders the Revenue page.
+ * @returns {JSX.Element} JSX element representing the Revenue page.
+ */
+export default function Revenue() {
+    return <Card>Revenue</Card>
+}
+```
+
+<br><br>
+
+- Create src/app/complex-dashboard/@users/page.tsx
+```javascript
+import Card from '@/components/card'
+
+/**
+ * Renders the Users page.
+ * @returns {JSX.Element} JSX element representing the Users page.
+ */
+export default function Users() {
+    return <Card>Users</Card>
+}
+```
+
+
+
+
+
+
+
+
+
+
+
