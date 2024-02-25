@@ -3213,3 +3213,149 @@ export default function PhotoModal({
 ```
 - This means if you click on an image the interception will fire and load the image by using `src/app/photo-feed/@modal/(..)photo-feed/[id]/page.tsx`
 - If you reload the page then it uses `src/app/photo-feed/[id]/page.tsx`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+_________________________________________________________
+_________________________________________________________
+<br><br>
+<br><br>
+
+
+
+
+
+
+## Route Handlers (route.ts)
+- https://www.youtube.com/watch?v=25yY2RVRq_M&list=PLC3y8-rFHvwjOKd6gdf4QtV1uYNiQnruI&index=33
+
+<br><br>
+
+- Create new project
+```shell
+cd ~/Projects
+npx create-next-app route-handlers-demo
+```
+
+<br><br>
+
+### Example 1
+- The example below will show you how simple route handling will work
+
+- Create `src/app/hello/route.ts`:
+- https://developer.mozilla.org/en-US/docs/Web/API/Response
+```javascript
+/**
+ * Handles the GET request.
+ * @returns {Response} The response with the message "Hello World!".
+ */
+export async function GET() {
+    return new Response('Hello World!')
+}
+```
+
+<br><br>
+
+- Create `src/app/dashboard/route.ts`
+```javascript
+/**
+ * Handles the GET request.
+ * @returns {Response} The response with the message "Dashboard".
+ */
+export async function GET() {
+    return new Response('Dashboard')
+}
+```
+- http://localhost:3000/dashboard
+
+<br><br>
+
+- Create `src/app/dashboard/users/route.ts`
+```javascript
+/**
+ * Handles the GET request.
+ * @returns {Response} The response with the message "Users".
+ */
+export async function GET() {
+    return new Response('Users')
+}
+```
+- http://localhost:3000/dashboard/users
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+### Example 1
+- The example below will show you how to avoid conflict with route.ts and page.tsx
+  - If you create both then the route.ts has higher prio e.g. http://localhost:3000/profile
+    - So you will see 'Profile API data'
+
+<br><br>
+
+- Create `src/app/dashboard/profile/page.tsx`
+```javascript
+/**
+ * Renders the Profile page.
+ * @returns {JSX.Element} JSX element representing the Profile page.
+ */
+export default function ProfilePage() {
+    return <h1>ProfilePage</h1>
+}
+```
+
+<br><br>
+
+- Create `src/app/dashboard/profile/route.ts`
+```javascript
+/**
+ * Handles the GET request.
+ * @returns {Response} The response with the message "Profile API data".
+ */
+export async function GET() {
+    return new Response('Profile API data')
+}
+```
+
+<br><br>
+
+- To solve the conflict move `src/app/dashboard/profile/route.ts` to  `src/app/profile/api/route.ts`
+  - Now if you visit `http://localhost:3000/profile` you will see the content of `src/app/dashboard/profile/page.tsx`
+  - If you  visit `http://localhost:3000/profile/api` you will see the content of `src/app/dashboard/profile/api/route.ts`
