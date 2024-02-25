@@ -3741,10 +3741,11 @@ export async function DELETE(
     { params } : { params: { id: string }}
 ) {
     const index = comments.findIndex(comment => comment.id === Number(params.id))
+  
+    const deletedComment = comments[index]
+    comments.splice(index, 1)
  
-    cconst
-
-    return Response.json(comments[index])
+    return Response.json(deletedComment)
 }
 ```
 - DELETE http://localhost:3000/comments/1
