@@ -2510,3 +2510,122 @@ export default function ArchivedNotifications() {
       ```
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+_________________________________________________
+_________________________________________________
+<br><br>
+<br><br>
+
+## Conditional Routes
+- Decide which content should be rendered by using conditions
+
+<br><br>
+
+1. Create src/app/complex-dashboard/@login/page.tsx:
+```javascript
+import Card from '@/components/card'
+
+/**
+ * Renders the Login page.
+ * @returns {JSX.Element} JSX element representing the Login page.
+ */
+export default function Login() {
+    return <Card>Login</Card>
+}
+```
+
+<br><br>
+
+2. Import new login slot to src/app/complex-dashboard/layout.tsx:
+- If isLoggedIn=false then the login slot will be rendered
+```javascript
+/**
+ * Dashboard layout component.
+ *
+ * @param {Object} props - The component props.
+ * @param {React.ReactNode} props.children - The child components to render.
+ * @param {React.ReactNode} props.users - The users component to render.
+ * @param {React.ReactNode} props.revenue - The revenue component to render.
+ * @param {React.ReactNode} props.notifications - The notifications component to render.
+  * @param {React.ReactNode} props.login - The login component to render.
+ * @returns {JSX.Element} The rendered Dashboard layout.
+ */
+export default function DashboardLayout({
+    children,
+    users,
+    revenue,
+    login,
+    notifications
+}: {
+     children: React.ReactNode;
+     users: React.ReactNode;
+     revenue: React.ReactNode;
+     login: React.ReactNode;
+     notifications: React.ReactNode;
+}) {
+    const isLoggedIn = false
+
+    return isLoggedIn ? (
+        <div>
+            <div>{children}</div>
+
+            <div style={{ display: 'flex' }}>
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <div>{users}</div>
+                    <div>{revenue}</div>
+                </div>
+
+                <div style={{ display: 'flex', flex: 1 }}>
+                    <div>{notifications}</div>
+                </div>
+            </div>
+        </div>
+    ) : ( 
+        <div>
+            <h1>Sign-in</h1>
+            <div>{login}</div>
+        </div>
+    )
+}
+```
