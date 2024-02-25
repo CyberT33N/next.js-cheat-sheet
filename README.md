@@ -2883,3 +2883,327 @@ export default function InterceptedF3() {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+_________________________________________________________
+_________________________________________________________
+<br><br>
+<br><br>
+
+
+
+
+
+## Parallel Intercepting Routes
+- https://www.youtube.com/watch?v=mVOvx9eVHg0&list=PLC3y8-rFHvwjOKd6gdf4QtV1uYNiQnruI&index=32
+
+<br><br>
+
+1. Clone Project:
+- https://github.com/gopinav/Next.js-14-Tutorials
+
+<br><br>
+
+2. Copy `src/app/photo-feed` into your project
+
+<br><br>
+
+3. Copy `src/components/modal.tsx` into your project:
+```javascript
+'use client'
+import { useCallback, useRef, useEffect, MouseEventHandler } from 'react'
+import { useRouter } from 'next/navigation'
+
+/**
+ * Modal component.
+ *
+ * @param {{ children: React.ReactNode }} props - The props for the Modal component.
+ * @returns {JSX.Element} The rendered Modal component.
+ */
+export default function Modal({ children }: { children: React.ReactNode }) {
+    const overlay = useRef(null)
+    const wrapper = useRef(null)
+    const router = useRouter()
+
+    const onDismiss = useCallback(() => {
+        router.back()
+    }, [router])
+
+    const onClick: MouseEventHandler = useCallback(
+        e => {
+            if (e.target === overlay.current || e.target === wrapper.current) {
+                if (onDismiss) onDismiss()
+            }
+        },
+        [onDismiss, overlay, wrapper]
+    )
+
+    const onKeyDown = useCallback(
+        (e: KeyboardEvent) => {
+            if (e.key === 'Escape') onDismiss()
+        },
+        [onDismiss]
+    )
+
+    useEffect(() => {
+        document.addEventListener('keydown', onKeyDown)
+        return () => document.removeEventListener('keydown', onKeyDown)
+    }, [onKeyDown])
+
+    return (
+        <div
+            ref={overlay}
+            className="fixed z-10 left-0 right-0 top-0 bottom-0 mx-auto bg-black/60 p-10"
+            onClick={onClick}
+        >
+            <div
+                ref={wrapper}
+                // eslint-disable-next-line max-len
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 sm:w-10/12 md:w-8/12 lg:w-2/5 p-6"
+            >
+                {children}
+            </div>
+        </div>
+    )
+}
+```
+
+<br><br>
+
+4. Check `src/app/photo-feed/wonders.ts` to understand how it works:
+```javascript
+import { StaticImageData } from 'next/image'
+import photo1 from './photos/1.jpg'
+import photo2 from './photos/2.jpg'
+import photo3 from './photos/3.jpg'
+import photo4 from './photos/4.jpg'
+import photo5 from './photos/5.jpg'
+import photo6 from './photos/6.jpg'
+import photo7 from './photos/7.jpg'
+
+export type WonderImage = {
+  id: string;
+  name: string;
+  src: StaticImageData;
+  photographer: string;
+  location: string;
+};
+
+const wondersImages: WonderImage[] = [
+    {
+        id: '1',
+        name: 'Great Wall of China',
+        src: photo1,
+        photographer: 'Photo by Max van den Oetelaar on Unsplash',
+        location: 'China'
+    },
+    {
+        id: '2',
+        name: 'Petra',
+        src: photo2,
+        photographer: 'Photo by Reiseuhu on Unsplash',
+        location: 'Jordan'
+    },
+    {
+        id: '3',
+        name: 'Christ the Redeemer',
+        src: photo3,
+        photographer: 'Photo by Andrea Leopardi on Unsplash',
+        location: 'Brazil'
+    },
+    {
+        id: '4',
+        name: 'Machu Picchu',
+        src: photo4,
+        photographer: 'Photo by Jared Schwitzke on Unsplash',
+        location: 'Peru'
+    },
+    {
+        id: '5',
+        name: 'Chichen Itza',
+        src: photo5,
+        photographer: 'Photo by E Mens on Unsplash',
+        location: 'Mexico'
+    },
+    {
+        id: '6',
+        name: 'Roman Colosseum',
+        src: photo6,
+        photographer: 'Photo by Andrea Cipriano on Unsplash',
+        location: 'Italy'
+    },
+    {
+        id: '7',
+        name: 'Taj Mahal',
+        src: photo7,
+        photographer: 'Photo by Su San Lee on Unsplash',
+        location: 'India'
+    }
+]
+
+export default wondersImages
+```
+
+<br><br>
+
+5. Check `src/app/photo-feed/page.tsx` to understand how it works:
+```javascript
+import Link from 'next/link'
+import wonders from './wonders'
+import Image from 'next/image'
+
+/**
+ * Renders the home page of the photo feed.
+ * Displays a grid of new wonders of the world with their images and names.
+ * @returns {JSX.Element} The rendered home page component.
+ */
+export default function Home() {
+    return (
+        <main className="container mx-auto">
+            <h1 className="text-center text-3xl font-bold my-4">
+        New Wonders of the World
+            </h1>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                {wonders.map(({ id, src, name }) => (
+                    <Link key={id} href={`/photo-feed/${id}`}>
+                        <Image
+                            alt={name}
+                            src={src}
+                            className="w-full object-cover aspect-square"
+                        />
+                    </Link>
+                ))}
+            </div>
+        </main>
+    )
+}
+```
+- Each image is linked with the link component
+
+<br><br>
+
+
+6. Check `src/app/photo-feed/[id]/page.tsx` to understand how it works:
+```
+import Image from 'next/image'
+import wondersImages, { WonderImage } from '../wonders'
+
+/**
+ * Renders the page for a specific photo.
+ * 
+ * @param {Object} props - The component props.
+ * @param {Object} props.params - The parameters object.
+ * @param {string} props.params.id - The ID of the photo.
+ * @returns {JSX.Element} The rendered photo page.
+ */
+export default function PhotoPage({
+    params: { id }
+}: {
+  params: { id: string };
+}) {
+    const photo: WonderImage = wondersImages.find(p => p.id === id)!
+    return (
+        <div className="container mx-auto my-10">
+            <div className="w-1/2 mx-auto">
+                <div>
+                    <h1 className="text-center text-3xl font-bold my-4">{photo.name}</h1>
+                </div>
+                <Image
+                    alt={photo.name}
+                    src={photo.src}
+                    className="w-full object-cover aspect-square "
+                />
+
+                <div className="bg-white py-4">
+                    <h3>{photo.photographer}</h3>
+                    <h3>{photo.location}</h3>
+                </div>
+            </div>
+        </div>
+    )
+}
+```
+- E.g. http://localhost:3000/photo-feed/2 will load image 2 of your image array
+
+
+<br><br>
+
+
+7. Check `src/app/photo-feed/@modal/(..)photo-feed/[id]/page.tsx` to understand how it works:
+```javascript
+import Image from 'next/image'
+import wondersImages, { WonderImage } from '../../../wonders'
+import Modal from '@/components/modal'
+
+/**
+ * Renders a modal component displaying details of a photo.
+ *
+ * @param {Object} props - The component props.
+ * @param {Object} props.params - The parameters object.
+ * @param {string} props.params.id - The ID of the photo.
+ * @returns {JSX.Element} The rendered modal component.
+ */
+export default function PhotoModal({
+    params: { id }
+}: {
+  params: { id: string };
+}) {
+    const photo: WonderImage = wondersImages.find(p => p.id === id)!
+
+    return (
+        <Modal>
+            <Image
+                alt={photo.name}
+                src={photo.src}
+                className="w-full object-cover aspect-square"
+            />
+
+            <div className="bg-white p-4">
+                <h2 className="text-xl font-semibold">{photo.name}</h2>
+                <h3>{photo.photographer}</h3>
+                <h3>{photo.location}</h3>
+            </div>
+        </Modal>
+    )
+}
+```
+- This means if you click on an image the interception will fire and load the image by using `src/app/photo-feed/@modal/(..)photo-feed/[id]/page.tsx`
+- If you reload the page then it uses `src/app/photo-feed/[id]/page.tsx`
