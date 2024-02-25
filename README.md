@@ -3613,3 +3613,138 @@ export async function GET(
 	{"id":1,"text":"This is the first comment"}
 	```
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+
+
+
+## Handling PATCH Request
+- https://www.youtube.com/watch?v=bDbBh7lEamE&list=PLC3y8-rFHvwjOKd6gdf4QtV1uYNiQnruI&index=37
+
+<br><br>
+
+- In order to patch the document for a specific id we can do:
+  - Create `src/app/comments/[id]/route.ts`:
+```
+import { comments } from '../data'
+
+/**
+ * Handles the PATCH request.
+ * @param {Request} req - The request object.
+ * @returns {Response} The response message.
+ */
+export async function PATCH(
+    req: Request,
+    { params } : { params: { id: string }}
+) {
+    const body = await req.json()
+    const { text } = body
+
+    const index = comments.findIndex(comment => comment.id === Number(params.id))
+ 
+    comments[index].text = text
+
+    return Response.json(comments[index])
+}
+```
+- PATCH http://localhost:3000/comments/1
+	```
+	{
+	    "text": "123"
+	}
+	```
+	  - Response:
+		```javascript
+		{
+		  "id": 1,
+		  "text": "123"
+		}
+		```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+
+
+## Handling DELETE Request
+- https://www.youtube.com/watch?v=x3KCt1Oc278&list=PLC3y8-rFHvwjOKd6gdf4QtV1uYNiQnruI&index=38
+
+<br><br>
+
+- In order to delete the document for a specific id we can do:
+  - Create `src/app/comments/[id]/route.ts`:
+```
+import { comments } from '../data'
+
+/**
+ * Handles the DELETE request.
+ * @param {Request} req - The request object.
+ * @returns {Response} The response message.
+ */
+export async function DELETE(
+    req: Request,
+    { params } : { params: { id: string }}
+) {
+    const index = comments.findIndex(comment => comment.id === Number(params.id))
+ 
+    cconst
+
+    return Response.json(comments[index])
+}
+```
+- DELETE http://localhost:3000/comments/1
