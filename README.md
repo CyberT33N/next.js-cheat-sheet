@@ -2170,6 +2170,15 @@ ____________________________________________________
 
 
 
+<br><br>
+<br><br>
+____________________________________________________
+____________________________________________________
+<br><br>
+<br><br>
+
+
+
 
 
 
@@ -2335,5 +2344,166 @@ export default function Users() {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+____________________________________________________
+____________________________________________________
+<br><br>
+<br><br>
+
+
+
+
+
+## Unmatched Routes
+
+### Navigation from the UI
+- In the case of navigation within the UI, Next.js retains the previously active state of a slot regardless of changes in the URL
+  - This means other slots keep uneffected
+
+### Page reload
+- Next.js immediately searches for a default.tsx file within each unmatched slot
+   - The presence of this file is critical, as it provides the default content that Next.js will render in the UI
+     - If this default.tsx file is missing in any of the unmatched slots for the current route, Next.js will render a 404 error
+       - **This means if you will click on the archived link from the example below and then reload the page for http://localhost:3000/complex-dashboard/archived then you would get a 404**
+         - This is because there is no default.tsx file in the children:
+           - src/app/complex-dashboard/@users
+           - src/app/complex-dashboard/@revenue
+
+
+- src/app/complex-dashboard/@notifications/page.tsx
+```javascript
+import Card from '@/components/card'
+import Link from 'next/link'
+
+/**
+ * Renders the Notifications page.
+ * @returns {JSX.Element} JSX element representing the Notifications page.
+ */
+export default function Notifications() {
+    return (
+        <Card>
+            <div>Notifications</div>
+            <Link href="/complex-dashboard/archived">Archived</Link>
+        </Card>
+    )
+}
+```
+
+<br><br>
+
+- src/app/complex-dashboard/@notifications/archived/page.tsx
+```javascript
+import Card from '@/components/card'
+import Link from 'next/link'
+
+/**
+ * Renders the Archived Notifications page.
+ * @returns {JSX.Element} JSX element representing the Archived Notifications page.
+ */
+export default function ArchivedNotifications() {
+    return (
+        <Card>
+            <div>Archived Notifications</div>
+            <Link href="/complex-dashboard">Default</Link>
+        </Card>
+    )
+}
+```
+
+
+
+
+<br><br>
+<br><br>
+
+### default.tsx
+- The `default.tsx` file in Next.js serves as a fallback to render content when the framework cannot retrieve a slots active state from the current url
+- you have complete freedom to define the UI for unmatched routes. You can either mirror the content found in page.tsx or craft an entirely custom view
+
+<br><br>
+<br><br>
+
+#### Examples
+- In order to prevent 404 when you visit http://localhost:3000/complex-dashboard/archived create:
+    - src/app/complex-dashboard/default.tsx
+      - This is the fallback for the children slot
+      ```javascript
+      /**
+		 * Renders the Default Complex Dashboard page.
+		 * @returns {JSX.Element} JSX element representing the Default Complex Dashboard page.
+		 */
+		export default function DefaultComplexDashboardPage() {
+		    return <h1>Complex Dashboard</h1>
+		}
+      ```
+
+    - src/app/complex-dashboard/@users/default.tsx
+      ```javascript
+		import Card from '@/components/card'
+
+		/**
+		 * Renders the Default Users page.
+		 * @returns {JSX.Element} JSX element representing the Default Users page.
+		 */
+		export default function DefaultUsers() {
+		    return <Card>Users</Card>
+		}
+      ```
+
+    - src/app/complex-dashboard/@revenue/default.tsx
+      ```javascript
+		import Card from '@/components/card'
+
+		/**
+		 * Renders the Default Revenue page.
+		 * @returns {JSX.Element} JSX element representing the Default Revenue page.
+		 */
+		export default function DefaultRevenue() {
+		    return <Card>Revenue</Card>
+		}
+      ```
 
 
