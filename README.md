@@ -8,8 +8,13 @@
     
 <br><br>
 
-## Extensions
+## Chrome Extensions
 - https://chromewebstore.google.com/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en&pli=1
+
+<br><br>
+
+## VS Code Extensions
+- https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client
 
 
 ## FAQ
