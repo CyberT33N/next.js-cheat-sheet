@@ -11,7 +11,10 @@
 - https://chromewebstore.google.com/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en&pli=1
 
 
+## FAQ
 
+### Slot is not rendered in dev modus
+- Try to restart npm run dev sometimes it is buggy..
 
 
 
