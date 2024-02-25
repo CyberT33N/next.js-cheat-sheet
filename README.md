@@ -15,6 +15,18 @@
 
 ## VS Code Extensions
 - https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client
+```
+# https://docs.pieces.app/installation-getting-started/linux
+sudo snap install pieces-os
+sudo snap connect pieces-os:process-control :process-control
+
+# NO UI
+pieces-os
+
+# With UI
+pieces-for-developers
+pieces-for-developers
+```
 
 
 ## FAQ
