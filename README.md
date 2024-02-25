@@ -3379,3 +3379,91 @@ export async function GET() {
 - To solve the conflict move `src/app/dashboard/profile/route.ts` to  `src/app/profile/api/route.ts`
   - Now if you visit `http://localhost:3000/profile` you will see the content of `src/app/dashboard/profile/page.tsx`
   - If you  visit `http://localhost:3000/profile/api` you will see the content of `src/app/dashboard/profile/api/route.ts`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+_____________________________________________________________
+_____________________________________________________________
+<br><br>
+<br><br>
+
+
+
+## Handling GET Request
+- https://www.youtube.com/watch?v=b3ue9WL5fk8&list=PLC3y8-rFHvwjOKd6gdf4QtV1uYNiQnruI&index=34
+- https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client
+
+- The example below will use memory data and not a databse to keep it simple
+
+<br><br>
+<br><br>
+
+- Create `src/app/comments/data.ts`
+  - **data.ts is not an next.js file convention name**
+```javascript
+export const comments = [
+    {
+        id: 1,
+        text: 'This is the first comment'
+    },
+    {
+        id: 2,
+        text: 'This is the second comment'
+    },
+    {
+        id: 3,
+        text: 'This is the third comment'
+    }
+]
+```
+
+<br><br>
+
+- Create `src/app/comments/route.ts`
+  - **data.ts is not an next.js file convention name**
+```javascript
+import { comments } from './data'
+
+/**
+ * Handles the GET request.
+ * @returns {Response} The response with the message "Dashboard".
+ */
+export async function GET() {
+    return Response.json(comments)
+}
+```
+- To test open thunderclient ín vs code an make new request
