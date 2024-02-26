@@ -3590,7 +3590,7 @@ __________________________________________________
 
 - In order to get the document for a specific id we can do:
   - Create `src/app/comments/[id]/route.ts`:
-```
+```javascript
 import { comments } from '../data'
 
 /**
@@ -3643,7 +3643,7 @@ export async function GET(
 
 - In order to patch the document for a specific id we can do:
   - Create `src/app/comments/[id]/route.ts`:
-```
+```javascript
 import { comments } from '../data'
 
 /**
@@ -3728,7 +3728,7 @@ export async function PATCH(
 
 - In order to delete the document for a specific id we can do:
   - Create `src/app/comments/[id]/route.ts`:
-```
+```javascript
 import { comments } from '../data'
 
 /**
@@ -3749,3 +3749,77 @@ export async function DELETE(
 }
 ```
 - DELETE http://localhost:3000/comments/1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+__________________________________________________
+__________________________________________________
+<br><br>
+<br><br>
+
+
+
+
+## URL Query Parameters
+- https://www.youtube.com/watch?v=fuxSl-K0oI0&list=PLC3y8-rFHvwjOKd6gdf4QtV1uYNiQnruI&index=40
+- E.q. you want to open localhost:3000/comments?query=first
+
+<br><br>
+
+- In order to handle query parameters do:
+  - Edit `src/app/comments/route.ts` and add request type `NextRequest`:
+```javascript
+import { comments } from './data'
+import { type NextRequest } from 'next/server'
+
+/**
+ * Handles the GET request.
+ * @param {Request} req - The request object.
+ * @returns {Response} The response.
+ */
+export async function GET(req: NextRequest) {
+    const { searchParams } = req.nextUrl
+    const query = searchParams.get('query')
+
+    const filteredComments = query ?
+        comments.filter(comment => comment.text.includes(query)) :
+        comments
+
+    // status 200 is the default status
+    return Response.json(filteredComments)
+}
+```
+- GET localhost:3000/comments?query=first
