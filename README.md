@@ -19,12 +19,8 @@
 # https://docs.pieces.app/installation-getting-started/linux
 sudo snap install pieces-os
 sudo snap connect pieces-os:process-control :process-control
-
-# NO UI
+sudo snap install pieces-for-developers
 pieces-os
-
-# With UI
-pieces-for-developers
 pieces-for-developers
 ```
 
