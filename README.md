@@ -3859,3 +3859,116 @@ export async function GET(
 ```
 - In this case the users gets redirected to http://localhost:3000/comments
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+
+
+
+
+
+# Headers in Route Handlers
+
+<br><br>
+
+## Request header
+- If you want to handle request handler e.g. if you call:
+  - http://localhost:3000/profile/api
+    - HEADER Authorization: Baerer 1234
+
+<br><br>
+
+## method #1
+```javascript
+import { type NextRequest } from 'next/server'
+
+/**
+ * Handles the GET request.
+ * @param {NextRequest} request - The request object.
+ * @returns {Response} The response with the message "Profile API data".
+ */
+export async function GET(request: NextRequest) {
+    const requestHeaders = new Headers(request.headers)
+    console.log(requestHeaders.get('Authorization'))
+
+    return new Response('Profile API data')
+}
+```
+
+<br><br>
+
+## method #2
+- headers() is read only
+```javascript
+import { headers } from 'next/headers'
+
+/**
+ * Handles the GET request.
+ * @returns {Response} The response with the message "Profile API data".
+ */
+export async function GET() {
+    const headerList = headers()
+    console.log(headerList.get('Authorization'))
+
+    return new Response('Profile API data')
+}
+```
+
+
+- GET http://localhost:3000/profile/api
+  - header Authorization: Bearer 12345
+
+
+<br><br>
+
+
+## Response header
+```javascript
+import { type NextRequest } from 'next/server'
+
+/**
+ * Handles the GET request.
+ * @param {NextRequest} request - The request object.
+ * @returns {Response} The response with the message "Profile API data".
+ */
+export async function GET(request: NextRequest) {
+    const requestHeaders = new Headers(request.headers)
+    console.log(requestHeaders.get('Authorization'))
+
+    return new Response('<h1>Profile API data</h1>', {
+    	headers: {
+    		'Content-Type': 'text/html'
+    	}
+    })
+}
+```
+
