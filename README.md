@@ -3819,3 +3819,43 @@ export async function GET(req: NextRequest) {
 }
 ```
 - GET localhost:3000/comments?query=first
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+
+
+
+# Redirects in Route Handlers
+- If you would visit http://localhost:3000/comments/4 then you would get a 404 because we only have 3 documents. If you want to redirect the user to a specific page in this you can use:
+  - e.g. src/app/comments/[id]/route.ts
+```javascript
+import { redirect } from 'next/navigation'
+import { comments } from '../data'
+
+/**
+ * Handles the GET request.
+ * @param {Request} req - The request object.
+ * @returns {Response} The response with the message "Profile API data".
+ */
+export async function GET(
+    req: Request,
+    { params } : { params: { id: string }}
+) {
+    if (Number(params.id) > comments.length) {
+        redirect('/comments')
+    }
+
+    const comment = comments.find(comment => comment.id === Number(params.id))
+
+    return Response.json(comment)
+}
+```
+- In this case the users gets redirected to http://localhost:3000/comments
+
