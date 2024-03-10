@@ -4167,3 +4167,159 @@ export async function GET() {
 ### Method #4
 - using any HTTP method other than GET
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+____________________________________
+____________________________________
+<br><br>
+<br><br>
+
+
+
+# Middleware
+
+<br><br>
+
+## Redirect
+- https://nextjs.org/docs/app/api-reference/functions/next-response#redirect
+
+<br><br>
+
+### Method #1
+- Create src/middleware.ts
+```typescript
+import { NextResponse, type NextRequest } from 'next/server'
+
+export function middleware(request: NextRequest) {
+    return NextResponse.redirect(new URL('/', request.url))
+}
+
+export const config = {
+	matcher: '/profile'
+}
+```
+- When you visit 127.0.0.1:3000/profile you will get redirected to 127.0.0.1
+
+
+<br><br>
+
+### Method #2
+- Create src/middleware.ts
+```typescript
+import { NextResponse, type NextRequest } from 'next/server'
+
+export function middleware(request: NextRequest) {
+    if (request.nextUrl.pathname === '/profile') {
+        return NextResponse.redirect(new URL('/hello', request.url))
+    }
+}
+```
+- When you visit 127.0.0.1:3000/profile you will get redirected to 127.0.0.1/hello
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+
+## Rewrite
+- https://nextjs.org/docs/app/api-reference/functions/next-response#rewrite
+- Produce a response that rewrites (proxies) the given URL while preserving the original URL.
+
+<br><br>
+
+- Create src/middleware.ts
+```typescript
+import { NextResponse, type NextRequest } from 'next/server'
+
+export function middleware(request: NextRequest) {
+    if (request.nextUrl.pathname === '/profile') {
+        return NextResponse.redirect(new URL('/time', request.url))
+    }
+}
+```
+- When you visit 127.0.0.1:3000/profile you will get redirected to 127.0.0.1/profile but the content of src/app/time/route.ts will be displayed
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+## Cookies
+- Create src/middleware.ts
+```typescript
+import { NextResponse, type NextRequest } from 'next/server'
+
+export function middleware(request: NextRequest) {
+    const response = NextResponse.next()
+
+    const themePreference = request.cookies.get('theme')
+
+    if (!themePreference) {
+    	console.log('Cookie not found..')
+        response.cookies.set('theme', 'dark')
+    }
+
+    return response
+}
+```
+  - When you visit e.g. 127.0.0.1:3000/profile you will see in dev tools > Application > Cookies that the cookie will be set. When you change the value there and then refresh the page you will notice that the cookie value will not change again because of the condition
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+## Headers
+- Create src/middleware.ts
+```typescript
+import { NextResponse, type NextRequest } from 'next/server'
+
+export function middleware(request: NextRequest) {
+    const response = NextResponse.next()
+    response.headers.set('custom-header', 'custom-value')
+    return response
+}
+```
+- When you visit e.g. 127.0.0.1:3000/profile you will see in dev tools > Network the Response Header `Custom-Header: custom-value`
