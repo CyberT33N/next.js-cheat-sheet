@@ -4068,3 +4068,102 @@ export async function GET(request: NextRequest) {
 }
 ```
   - Make GET 127.0.0.1:3000/profile/api and check the Cookies tab
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+_______________________________________
+_______________________________________
+<br><br>
+
+
+# Caching in Route Handlers
+- Route Handlers are cached by default when using the GET method with the Response object in Next.js
+
+- Create /src/app/time/route.ts
+```typescript
+/**
+ * Handles the GET request.
+ * @returns {Response} The response with the message "Profile API data".
+ */
+export async function GET() {
+     const res = JSON.stringify({ time: new Date().toLocaleTimeString() })
+
+     return new Response(res, {
+          headers: { 'Content-Type': 'application/json' }
+      })
+}
+```
+- In dev mode (npm run dev) when you refresh 127.0.0.1:3000/time you will see that the response time is changing
+- In build mode (npm run build && npm run start) when you refresh 127.0.0.1:3000/time you will see that the response time is not changing because it is cached
+
+<br><br>
+
+## How to disable caching?
+
+<br><br>
+
+### Method #1 - dynamic mode in segment config options
+```typescript
+export const dynamic = 'force-dynamic';
+
+/**
+ * Handles the GET request.
+ * @returns {Response} The response with the message "Profile API data".
+ */
+export async function GET() {
+     const res = JSON.stringify({ time: new Date().toLocaleTimeString() })
+
+     return new Response(res, {
+          headers: { 'Content-Type': 'application/json' }
+      })
+}
+```
+
+<br><br>
+
+### Method #2
+- Using the Request object with the GET method
+
+<br><br>
+
+### Method #3
+- employing dynamic functions like headers() and cookies()
+
+<br><br>
+
+### Method #4
+- using any HTTP method other than GET
+
