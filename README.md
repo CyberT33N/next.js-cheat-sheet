@@ -4323,3 +4323,81 @@ export function middleware(request: NextRequest) {
 }
 ```
 - When you visit e.g. 127.0.0.1:3000/profile you will see in dev tools > Network the Response Header `Custom-Header: custom-value`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+___________________________
+___________________________
+<br><br>
+<br><br>
+
+
+# Rendering
+- Rendering is the process that transforms the code you write into user interfaces
+- In Next.js, choosing the right time and place to do this rendering is vital for building a performant application
+- CSS, SSR and RSCs
+
+
+<br><br>
+
+## Client-side Rendering
+- Client will send Request to server
+  - Server returns HTML + JS reference
+  ```
+  <div id="root"></div>
+  <script type="text/javascript" src="/static/js/bundle.js"></script>
+  ```
+    - The bundle.js contains everything you need to run. Including the react library itself and your application code
+      - It is downloaded when the HTML file is parsed
+        - The downloaded JS Code then generates the HTML and inserts it into the DOM of the root div
+
+- This method of rendering, where the component code is tranformed into a juser interface directly withing the browser (the client), is known as client-side rendering (CSR)
+
+- CSR quickly became the standard for single page applications (SPA), with widespread adoption
+
+
+<br><br>
+<br><br>
+
+### Drawbacks of CSR
+
+<br><br>
+
+#### SEO
+- Generating HTML that mainly contains a single div tag is not optimal for SEO, as it provides little content for search engines to index
+  - If there are nested js file which will be rendered and it will not happen fast enough then the crawler may not be able to index 
+
+<br><br>
+
+#### Performance
+- Having the browser (the client) handle all the work, such as fetching data, computing the UI, and making the HTML interactive can slow things down. Users might see a blank screen or a loading spinner while the page loads
+- Each new feature added to the application increases the size of the Js bundle, prolonging the wait for users to see the UI
