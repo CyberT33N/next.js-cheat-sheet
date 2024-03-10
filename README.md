@@ -3972,3 +3972,99 @@ export async function GET(request: NextRequest) {
 }
 ```
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+_______________________________________
+_______________________________________
+<br><br>
+
+# Cookies in Route Handlers
+
+<br><br>
+
+## Method #1
+- You can set Cookies by using Response()
+- You can read cookies by using request.cookies.get()
+```typescript
+import { type NextRequest } from 'next/server'
+
+/**
+ * Handles the GET request.
+ * @param {NextRequest} request - The request object.
+ * @returns {Response} The response with the message "Profile API data".
+ */
+export async function GET(request: NextRequest) {
+    const theme = request.cookies.get('theme')
+    console.log(theme) // { name: 'theme', value: 'dark' }
+
+    return new Response('<h1>Profile API data</h1>', {
+    	headers: {
+    	    'Content-Type': 'text/html',
+            'Set-Cookie': 'theme=dark'
+    	}
+    })
+}
+```
+  - Make GET 127.0.0.1:3000/profile/api and check the Cookies tab
+
+<br><br>
+
+## Method #2 (recommended)
+- https://nextjs.org/docs/app/api-reference/functions/cookies
+- You can set Cookies by using cookies().set()
+- You can read cookies by using cookies().get()
+```typescript
+import { type NextRequest } from 'next/server'
+import { cookies } from 'next/headers'
+
+/**
+ * Handles the GET request.
+ * @param {NextRequest} request - The request object.
+ * @returns {Response} The response with the message "Profile API data".
+ */
+export async function GET(request: NextRequest) {
+    cookies().set('theme', 'dark')
+
+    const theme = cookies().get('theme')
+    console.log(theme) // { name: 'theme', value: 'dark', path: '/' }
+
+    return new Response('<h1>Profile API data</h1>', {
+    	headers: {
+    	    'Content-Type': 'text/html'
+    	}
+    })
+}
+```
+  - Make GET 127.0.0.1:3000/profile/api and check the Cookies tab
