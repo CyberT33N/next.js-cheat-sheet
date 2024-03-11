@@ -4369,7 +4369,11 @@ ___________________________
 
 <br><br>
 
-## Client-side Rendering
+<br><br>
+<br><br>
+
+
+## Client-side Rendering (CSR)
 - Client will send Request to server
   - Server returns HTML + JS reference
   ```
@@ -4417,6 +4421,9 @@ ___________________________
 
 
 
+
+<br><br>
+<br><br>
 
 <br><br>
 <br><br>
@@ -4492,3 +4499,119 @@ ___________________________
 - create an "all or nothing" waterfall problem that spans from the server to the client, where each issue must be resolved before moving to the next one
 
 - This is inefficient is some parts of your app are slower than others, as is often the case in real-world apps
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+<br><br>
+<br><br>
+
+
+## Suspense SSR Architecture
+- Use the <Suspense> component to unlock two major SSR features:
+  - 1. HTML streaming on the server
+  - 2. Selective hydration on the client
+
+<br><br>
+
+### HTML streaming on the Server
+- You do not have to fetch everything before you can show anything
+
+- If a particular section delays the initial HTML, it can seamlessly integrated into the stream later
+
+- This is the essence of how Suspense facilitates server-side HTML streaming
+
+
+<br><br>
+<br><br>
+
+### The other challenger
+- Until the javascript for the main section is loaded, client-side app hydration cannot start
+  - And if the javascript bundle for the main section is large, this could significantly delay the process
+
+
+<br><br>
+<br><br>
+
+#### Code splitting
+- Code splitting allows you to mark specific code segments as not immediately necessary for loading, signalling your bundler to segregate them into seperate `<script>` tags
+
+- Using `React.lazy` for code splitting enables you to seperate the main sections code from the primary javascript bundle
+  - The javascript containing React and the code for the entire application, excluding the main section, can now be downloaded independently by the client, without having to wait for the main sections code
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+### Selective Hydration on the Client
+- This process is managed automatically by React
+
+- Selective hydration offers a solution to the issue `The necessity to hydrate everything to interact with anything`
+
+- By wrapping the main section within `<Suspense>`, you've indicated to React that it should not prevent the rest of the page from not just streaming but also from hydrating
+  - This feature, called selective hydration allows for the hydration of sections as they become available, before the rest of the HTML and the Javascript code are fully downloaded
+
+- Thanks to Selective hydration, a heavy piece of JS does not prevent the rest of the page from becoming interactive
+
+- React begins hydrating as soon as possible, enabling interactions with elements like the header and side navigation without waiting for the main content to be hydrated
+
+- In scenarios where multiple components are awaiting hydration, React prioritizes hydration based on user interactions
+
+
+
+
+
+<br><br>
+<br><br>
+
+### Drawbacks of Suspense SSR
+- Even though javascript code is streamed to the browser asynchronously, eventually, the entire code for a web page must be downloaded by the user
+	- As applications add more featues, the amount of code users need to download also grows. This leads to an important question:
+	  - should users really have to download so much data?
+
+- The current approach requires that all React components undergo hydration on the client-side, irrespective of their actual need for interactivity
+  - This process can inefficiently spend resources and extend the loading times and time to interactivity for users, as their devices need to process and render components that might not even require client-side interaction
+  - This leads to an important question:
+    - Should all components be hydrated, even those that do not need interactivity?
+
+- In spite of servers superior capacity for handling intensive processing tasks, the bulk of javascript execution still takes place on the users device
+  - This can slow down the performance, especially on devices that are not very powerful
+    - This leads to an important question:
+      - should so much of the work be done on the users device?
