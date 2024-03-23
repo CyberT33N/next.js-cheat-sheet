@@ -4423,8 +4423,23 @@ ___________________________
 <br><br>
 <br><br>
 
+## The evolution of React Rendering
+- Client-side Rendering (CSR) -> Server-side Rendering (SSR) -> Suspense for SSR -> React Server Components (RSC)
 
-## Client-side Rendering (CSR)
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+### Client-side Rendering (CSR)
 - Client will send Request to server
   - Server returns HTML + JS reference
   ```
@@ -4652,7 +4667,7 @@ ___________________________
 <br><br>
 <br><br>
 
-### Drawbacks of Suspense SSR
+### Drawbacks of Suspense for SSR
 - Even though javascript code is streamed to the browser asynchronously, eventually, the entire code for a web page must be downloaded by the user
 	- As applications add more featues, the amount of code users need to download also grows. This leads to an important question:
 	  - should users really have to download so much data?
