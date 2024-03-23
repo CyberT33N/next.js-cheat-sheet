@@ -171,6 +171,57 @@ _______________________________________________________
 #### route.ts
 - https://github.com/CyberT33N/next.js-cheat-sheet/blob/main/README.md#route-handlers-routets
 
+<br><br>
+
+#### tsconfig.json
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+_______________________________________________________
+_______________________________________________________
+
+<br><br>
+<br><br>
+
+
+# tsconfig.json
+- https://nextjs.org/docs/app/building-your-application/configuring/absolute-imports-and-module-aliases
+
+<br><br>
+
+## Absolute Imports and Module Path Aliases
+```
+// before
+import { Button } from '../../../components/button'
+ 
+// after
+import { Button } from '@/components/button'
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
