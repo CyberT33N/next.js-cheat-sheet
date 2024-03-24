@@ -173,7 +173,14 @@ _______________________________________________________
 
 <br><br>
 
+#### middleware.ts
+- https://github.com/CyberT33N/next.js-cheat-sheet/#middleware
+  
+<br><br>
+
 #### tsconfig.json
+
+
 
 
 
@@ -4835,4 +4842,145 @@ ___________________________
 - Server Components allows the rendering process to be divided into mangeable chunks, which are then streamed to the client as soon as they are ready
   - This approach allows users to start seeing parts of the page earlier, eliminating the need to wait for the entire page to finish rendering on the server
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+_________________________________________________________________
+_________________________________________________________________
+<br><br>
+<br><br>
+
+
+
+# Server Components
+- By default, every component in a Next.js app is considered a server component
+- Including the root layout (src/app/layout.tsx) and root page (src/app/page.tsx)
+
+1. Create new project
+```shell
+npx create-next-app@latest rendering-demo
+```
+
+2. Create Server Component `src/appp/about/page.tsx`
+```javascript
+export default function AboutPage() {
+  console.log('Test')
+
+  return (
+    <>
+      <h1>About page</h1>
+    </>
+  );
+}
+```
+- You can verify it by using console.log()
+  - You will see that the log is only in your terminal from your app and not client-side
+
+
+<br><br>
+
+Imagine you would try to use useState() inside of this server component which is only allowed in client components you would get the error **"You're importing a component that needs useState. It only works in a Client Component but none of its parents are marked with "use client", so they're Server Components by default"**
+```javascript
+// https://react.dev/reference/react/useState
+import { useState } from 'react'
+
+export default function AboutPage() {
+  const [name, setName] = useState('')
+
+  console.log('Test')
+
+  return (
+    <>
+      <h1>About page</h1>
+    </>
+  );
+}
+```
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+
+# Client Components
+
+1. Create client component `dashboard/page.tsx`
+```typescript
+'use client'
+
+import { useState } from 'react'
+
+export default function DashboardPage() {
+  console.log('DashboardPage()')
+
+  const [name, setName] = useState('')
+
+  return (
+    <div>
+      <h1>Dashboard</h1>
+      <input value={name} onChange={(e) => setName(e.target.value)} />
+      <p>Hello, {name}!</p>
+    </div>
+  );
+}
+```
+- `'use client'` will be set on the top to define the client component
+
+2. Add to `src/app/page.tsx` at the top:
+```typescript
+import Link from 'next/link'
+```
+
+Then add to the main component:
+```html
+<Link href="/dashboard">Dashboard</Link>
+```
+
+Now open:
+- http://localhost:3000
+  - Then click on the dashboard link and check the browser console. **You'll see that the console.log() from your dashboard page.tsx will be logged now twice**. But the log will not be inside your app terminal.
+    - This is because of reacts strict mode. If you refresh now the browser at `http://localhost:3000/dashboard` you'll see that the console.log() from your dashboard page.tsx will be logged now **again** twice in your browser console. **But aswell one time in your app terminal**
+      - Client Components are primeraly execute on the client-side and have access to browser API's but they are also pre-rendered once on the server to allow the user to immediately see the page HTML content rather than a blank screen.
+        - **Even if it is may confusing this means a client component executes once on the server and then on the client**
 
