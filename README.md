@@ -4681,3 +4681,158 @@ ___________________________
   - This can slow down the performance, especially on devices that are not very powerful
     - This leads to an important question:
       - should so much of the work be done on the users device?
+     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+
+# React Server Components (RSC)
+- The app router in Next.js is built around the RSC architecture
+
+- This approach aims to leverage the strengths of both server and client environments, optimzing for efficiency, load times and interactivity
+
+- The architecture introduces a dual-component model
+  - Client Components
+  - Server Components
+
+  This disctinction is not based on the functionality of the components but rather on where they execute and the specific environments they are designed to interact with
+
+
+- take charge of data fetching and static rendering, while Client Components are tasked with rendering the interactive elements of the application
+
+- The bottom line is that the RSC architecture enabled React applications to leverage the best aspects of both server and client rendering, all while using a single language, a single framework and a cohesive set of API's
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+## Client Components
+- are the familiar React components we've been using
+
+- They are typically rendered on the client-side (CSR) but, they can also be rendered to HTML on the server (SSR), allowing users to immediately see the page's HTML content rather than a blank screen
+
+- Components that primarily run on the client but can (and should) also be executed once on the server as an optimization strategy
+
+- have access to the client environment, such as the browser, allowing them to use state, effetcs, and event listeners to handle interactivity and also access browser-exclusive API's like geolocation or localStorage, allowing you to build UI for specfic use cases
+
+- In fact, the term "Client Component" does not signify anything new. It simply helps differentiate these components from the newly introduced Server Components
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+## Server Components
+- represent a new type of React component specifically designed to operate exclusively on the server
+
+- Unlike client components, their code stays on the server and is never downloaded to the client
+
+- this design choice offers multiple benefits to React applications
+
+
+
+<br><br>
+<br><br>
+
+## Benefits of Server Components
+
+<br><br>
+
+### Reduced Bundle Sizes
+- Server Components do not send code to the client, allowing large dependencies to remain server-side
+- This benefits users with slower internet or less capable devices by elimnating the need to download, parse and execute javascript for these components
+- Additionally it removed the hydration step, speeding up app loading and interaction
+
+
+<br><br>
+
+### Direct Access to Server-side Resources
+- By having direct access to Server-side Resources like databases or file systems, Server Components enable efficient data fetching and rendering without needing additional client-side processing
+- Leveraging the servers computational power and proximity to data sources, they manage compute-intensive rendering tasks and send only interactive pieces of code to the client
+
+
+<br><br>
+
+### Enhanced Security
+- Server Components exclusive server-side execution enhances security by keeping sensitive data and logic, including tokens and API keys, away from the client-side
+
+<br><br>
+
+### Improved Data Fetching
+- Server Components enhance data fetching efficiency
+
+ - typically, when fetching data on the client-side using useEffect, a child component cannot begin loading its data until the parent component has finished loading its own
+    - This sequential fetching of data often leads to poor performance
+    - The main issue is not the round trips themselves, but that these round trips are made from the client to the server
+      - Server Components enable applications to shift these sequential round trips to server side
+        - By moving this logic to the server, request latency is reduced and overall performance is improved, elimating client-server "waterfalls"
+
+
+<br><br>
+
+### Caching
+- Rendering on the server enables caching of the results, which can be reused in subsequent requests and accross different users
+  - This approach can significantly improve performance and reduce costs by minimizing the amount of rendering and data fetching required for each request
+
+
+<br><br>
+
+### Faster Initial Page Load and First Contentful Paint
+- Sixth, Initial Page Load and First Contentful Paint (FCP) are significantly improved with Server Components
+- By generating HTML on the server, pages become immediately visible to users without delay of download, parsing, and executing javascript
+
+
+<br><br>
+
+### Improved SEO
+- Regarding Search Engine Optimization (SEO), the server-rendered HTML is fully accessible to search engine bots, enhancing the indexability of your pages
+
+
+<br><br>
+
+### Efficient Streaming
+- Server Components allows the rendering process to be divided into mangeable chunks, which are then streamed to the client as soon as they are ready
+  - This approach allows users to start seeing parts of the page earlier, eliminating the need to wait for the entire page to finish rendering on the server
+
+
