@@ -4984,3 +4984,96 @@ Now open:
       - Client Components are primeraly execute on the client-side and have access to browser API's but they are also pre-rendered once on the server to allow the user to immediately see the page HTML content rather than a blank screen.
         - **Even if it is may confusing this means a client component executes once on the server and then on the client**
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+_________________________________________________
+_________________________________________________
+
+<br><br>
+<br><br>
+
+
+
+
+
+
+
+# React Server Component (RSC) Rendering Lifecycle
+- It is important to consider three elements:
+  - Client side: Your browser,
+  - Server side: Next.js & React
+
+
+<br><br>
+
+## Initial Loading sequence
+- Client Request -> Next.js App Router -> Matches URL to a server component
+  - Next.js instructs react to render server component -> React renders the server component and any child components that are also server components by converting them into a special JSON format known as the RSC payload
+    - If you visit any page.tsx file you can see this JSON firmat in the Response Tab
+    - During this rendering if any server components suspends reacts pauses rendering of that subtree and sends a placeholder value instead. Meanwhile client components are prepared with instructions for later in the life cycle. Next.js uses the RSC payload which includes the client component instructions to generate HTML on the server. -> This HTML is streamed to your browser to immediately show a fast non-interactive preview of the route (**non-interactive UI**). Alongside Next.js streams the RSC payload as react render each unit of the UI
+      - In the browser Next.js processes the streamed react reponse. React uses the RSC payload and cient component instructions to progressively render the UI
+        - Once all the components and the server components output has been loaded and  presented to the user (**Final UI**). 
+          - The user client components undergo hydration  transforming our app from a static display into an interactive experience. This is the initial loading sequence (**Interactive UI**)
+
+
+<br><br>
+
+## Update Sequence
+- Important for refreshing parts of the app
+
+- The browser requests a re-fetch of a specific UI such as a full route -> Next.js processes the request and matches it to the requested server component
+  - Next.js instructs react to render the component tree -> React renders the components similar the initial loading. But unlike the initial sequence there is no HTML generation for updated sequence. Next.js progressively streams the response data back to the client
+    - On recieving the streamed response next.js triggers a re-render of the route using the new output. React reconciles or merges the new rendered output with the existing components on screen since the uI description is a special JSON format and not HTML react can update the DOM while preserving crucial UI updated such as focus or input values
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+
+# Server Render Strategies
+- Static rendering
+- Dynamic rendering
+- Streaming
+
+
+
+
+
+
+
