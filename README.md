@@ -60,11 +60,22 @@ npx next telemetry disable
 
 <br><br>
 
+# Init Project
+```shell
+npm i
+```
+
+
+<br><br>
+
+<br><br>
+
 # Start app
 ```shell
 npm run dev
 ```
 
+<br><br>
 
 # Telemetry
 - https://nextjs.org/telemetry
