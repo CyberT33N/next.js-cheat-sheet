@@ -5211,8 +5211,11 @@ Route (app)                              Size     First Load JS
 <br><br>
 
 #### Legend
-- Hollow Circle
+- Hollow Circle ○
   - Indicates static rendering where the route is automatically pre-rendered at build time as static HTML content
+
+- Lambda Symbol λ
+  - Indicated dynamic rendering - server-rendered on demand using Node.js
 
 
 
@@ -5278,3 +5281,101 @@ Route (app)                              Size     First Load JS
       - When you refresh the page you will notice that the initial loading time takes longer than all other after them this is because of the caching
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+
+
+## Dynamic rendering
+- Is a server rendering strategy where routes are rendered for each user at request time
+- It is useful when a route has data that is personalized to the user or contains information that can only be known at request time, such as cookies or the URL's search parameters
+  - e.g. news website, personalized e-commerce pages or social media feeds are some examples
+
+<br><br>
+<br><br>
+
+### How to dynamically render
+- During rendering, if a dynamic function is discovered, Next.js will switch to dynamically rendering the whole route
+- In Next.js, these dynamic functions are: cookies(), headers and searchParams
+  - Using any of the will opt the whole route into dynamic rendering at request time
+
+<br><br>
+
+1. Add to `src/app/about/page.tsx`
+```typescript
+import { cookies } from "next/headers";
+
+export default function AboutPage() {
+  const cookieStore = cookies();
+
+  const theme = cookieStore.get("theme");
+  console.log(theme);
+
+  return (
+    <>
+      <h1>About page {new Date().toLocaleTimeString()}</h1>
+    </>
+  );
+}
+```
+
+<br><br>
+
+2. Delete `.next` folder
+
+<br><br>
+
+3. Run `npm run build`
+- As related to the explaining in Static Rendering we will have the output with the sizes where the about route will have a lambda symbol λ
+- In contrast to static rendering, there will be nothing rendered at build time. So there is file: `.next/server/app/about.html`
+
+<br><br>
+
+4. Run `npm run start`
+- If you refresh now `localhost:3000/about` the page is pre-remdered and you can see the console.log statement in the terminal
+  - In the network tab we can see the preview as well as the response which contains the HTML. Refreshing `localhost:3000/about` will render the latest time `new Date().toLocaleTimeString()`.
+    - But the HTML file is still not generated in `.next/server/app` since a new page is built for every request there is no need to generate a page
