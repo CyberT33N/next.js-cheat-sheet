@@ -5379,3 +5379,133 @@ export default function AboutPage() {
 - If you refresh now `localhost:3000/about` the page is pre-remdered and you can see the console.log statement in the terminal
   - In the network tab we can see the preview as well as the response which contains the HTML. Refreshing `localhost:3000/about` will render the latest time `new Date().toLocaleTimeString()`.
     - But the HTML file is still not generated in `.next/server/app` since a new page is built for every request there is no need to generate a page
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+
+
+
+
+## Streaming
+- Is a strategy that allows for progressive UI rendering from server
+  - Work is divided into chunks and streamed to the client as soon as it is ready
+    - This enables users to see parts of the page immediately, before the entire content has finished rendering
+
+- Significantly improves both the initial page loading performance and the rendering of UI elements that rely on slower data fetches, which would otherwhise block the rendering of the entire route. Similiar to Suspense for SSR
+  - Streaming is integrated into the Next.js App router by default
+
+<br><br>
+
+1. Create `src/app/product-detail/page.tsx`
+```typescript
+import { Suspense } from "react";
+
+import { Product } from "@/components/product";
+import { Reviews } from "@/components/reviews";
+
+export default function ProductDetailPage() {
+  return (
+    <div>
+      <h1>Product detail page</h1>
+      <Product />
+      <Reviews />
+    </div>
+  );
+}
+```
+
+<br><br>
+
+`src/app/components/product.tsx`
+```typescript
+export const Product = async () => {
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+  return <div>Product</div>;
+}
+```
+
+<br><br>
+
+`src/app/components/reviews.tsx`
+```typescript
+export const Reviews = async () => {
+  await new Promise((resolve) => setTimeout(resolve, 4000));
+  return <div>Reviews</div>;
+}
+```
+
+<br><br>
+
+We are intentionally delaying the rendering of the product component by 2 seconds and the reviews component by 4 seconds. This simulates the time taken to fetch data
+
+<br><br>
+
+2. Run `npm run dev`
+
+<br><br>
+
+3. Open `localhost:3000/product-detail`
+- You will notice that the page will take time to render the H1 tag along with the two components. When you refresh again you will see in the network tab the `waiting for server response` with 4+ seconds. Indicating that the data for the entire page is fetched before sending the response 
+
+<br><br>
+
+4. Lets enhance this with the streaming strategy supported in the app router by adding to `src/app/product-detail/page.tsx`. All we need to do is import the suspense component and wrap the other componse with suspense and next.js handles everything:
+```typescript
+import { Suspense } from "react";
+
+import { Product } from "@/components/product";
+import { Reviews } from "@/components/reviews";
+
+export default function ProductDetailPage() {
+  return (
+    <div>
+      <h1>Product detail page</h1>
+      <Suspense fallback={<p>Loading product details...</p>}>
+        <Product />
+      </Suspense>
+      <Suspense fallback={<p>Loading reviews...</p>}>
+        <Reviews />
+      </Suspense>
+    </div>
+  );
+}
+```
+
+5. Reload `localhost:3000/product-detail` and now we immediately see the H1 and the fallbacks. The fallbacks will be replace with the content of the components until they are done with the timeout
