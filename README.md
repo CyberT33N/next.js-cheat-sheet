@@ -56,11 +56,16 @@ ___________________________________________________
 cd ~/Projects
 npx create-next-app@latest app-name-here
 npx next telemetry disable
+
+# Create your repo via ui 
+git remote add github git@github.com:CyberT33N/c0in-suite.git
+
+git push
 ```
 
 <br><br>
 
-# Init Project
+# Init other Projects
 ```shell
 npm i
 ```
