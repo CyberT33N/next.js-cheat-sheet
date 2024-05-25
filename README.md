@@ -5578,7 +5578,14 @@ _______________________________________________________
 
 <br><br>
 
-## next/image component (recommended)
+## Embed SVGs using JSX syntax in a React component (Recommend)
+- One of the easiest ways of using an SVG in a React component is to embed it inline. However, this requires you to convert the SVG elements to JSX syntax. There are several online tools for transforming an SVG image markup to JSX syntax — one such tool is SVGR.
+  - https://react-svgr.com/playground/
+ 
+<br><br>
+
+## next/image component
+- **This will cause that the svgs are not directlly fully loaded but maybe some of your components which will not look good**
 - https://nextjs.org/docs/api-reference/next/image
 - The next/image component is the de facto component for loading and rendering images — including SVGs — in Next.js. This component efficiently loads and renders images and can optimize your images for faster page loading, performance, and visual stability. It is an extension of the HTML image element.
 ```javascript
@@ -5612,9 +5619,3 @@ const App = () => (
 	);
   ```
 
-
-<br><br>
-
-## Embed SVGs using JSX syntax in a React component
-- One of the easiest ways of using an SVG in a React component is to embed it inline. However, this requires you to convert the SVG elements to JSX syntax. There are several online tools for transforming an SVG image markup to JSX syntax — one such tool is SVGR.
-  - https://react-svgr.com/playground/
