@@ -5619,3 +5619,58 @@ const App = () => (
 	);
   ```
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+_______________________________________________________
+_______________________________________________________
+
+<br><br>
+<br><br>
+
+# Environment Variables
+- https://nextjs.org/docs/pages/building-your-application/configuring/environment-variables#loading-environment-variables
+- You can use any .env file but it is recommended to use .env.local
+- There is no need to use dotenv because environment variables will be automatically loaded
+- **You can use environment variables only server side. You have to access to them in client components**
+  - If you need access to them you can use NEXT_PUBLIC_ prefix
+    - https://nextjs.org/docs/pages/building-your-application/configuring/environment-variables#bundling-environment-variables-for-the-browser 
+
