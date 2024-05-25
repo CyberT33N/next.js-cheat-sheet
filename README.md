@@ -5514,3 +5514,107 @@ export default function ProductDetailPage() {
 ```
 
 5. Reload `localhost:3000/product-detail` and now we immediately see the H1 and the fallbacks. The fallbacks will be replace with the content of the components until they are done with the timeout
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+_______________________________________________________
+_______________________________________________________
+
+<br><br>
+<br><br>
+
+# Images
+
+<br><br>
+
+## Import SVG
+- https://blog.logrocket.com/import-svgs-next-js-apps/#import-svgs-next-js
+
+<br><br>
+
+## next/image component (recommended)
+- https://nextjs.org/docs/api-reference/next/image
+- The next/image component is the de facto component for loading and rendering images — including SVGs — in Next.js. This component efficiently loads and renders images and can optimize your images for faster page loading, performance, and visual stability. It is an extension of the HTML image element.
+```javascript
+import Image from 'next/image';
+import twitterIcon from "../../public/images/twitter-icon.svg";
+
+const App = () => (
+  <div>
+    <Image
+      priority
+      src={twitterIcon}
+      alt="Follow us on Twitter"
+    />
+  </div>
+);
+```
+  - You don’t need to specify the width and height props because Next.js will determine their values out of the box. On the other hand, for remote images, the src property should be an absolute or relative URL string. You should set the height and width properties like in the example below:
+  ```javascript
+	import Image from 'next/image';
+	
+	const App = () => (
+	  <div>
+	    <Image
+	      priority
+	      src="/images/twitter-icon.svg"
+	      height={32}
+	      width={32}
+	      alt="Follow us on Twitter"
+	    />
+	  </div>
+	);
+  ```
+
+
+<br><br>
+
+## Embed SVGs using JSX syntax in a React component
+- One of the easiest ways of using an SVG in a React component is to embed it inline. However, this requires you to convert the SVG elements to JSX syntax. There are several online tools for transforming an SVG image markup to JSX syntax — one such tool is SVGR.
+  - https://react-svgr.com/playground/
