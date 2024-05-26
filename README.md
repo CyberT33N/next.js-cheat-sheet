@@ -5682,3 +5682,112 @@ TWITTER_USER=nextjs
 TWITTER_URL=https://twitter.com/$TWITTER_USER
 ```
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+_______________________________________________________
+_______________________________________________________
+
+<br><br>
+<br><br>
+
+# Testing
+- https://nextjs.org/docs/app/building-your-application/testing
+
+<br><br>
+
+
+## Jest
+- https://nextjs.org/docs/app/building-your-application/testing/jest
+
+<br><br>
+
+### Install
+```shell
+npm install -D jest jest-environment-jsdom @testing-library/react @testing-library/jest-dom
+```
+
+<br><br>
+
+Generate a basic Jest configuration file by running the following command:
+```shell
+npm init jest@latest
+```
+
+<br><br>
+
+Update jest.config.ts:
+```javascript
+import type { Config } from 'jest'
+import nextJest from 'next/jest.js'
+ 
+const createJestConfig = nextJest({
+  // Provide the path to your Next.js app to load next.config.js and .env files in your test environment
+  dir: './',
+})
+ 
+// Add any custom config to be passed to Jest
+const config: Config = {
+  coverageProvider: 'v8',
+  testEnvironment: 'jsdom',
+  // Add more setup options before each test is run
+  // setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
+}
+ 
+// createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
+export default createJestConfig(config)
+```
+
+<br><br>
+
+### package.json
+```
+{
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  }
+}
+```
+- jest --watch will re-run tests when a file is changed. For more Jest CLI options, please refer to the Jest Docs
+  - https://jestjs.io/docs/cli#reference
