@@ -5668,12 +5668,26 @@ _______________________________________________________
 
 # Environment Variables
 - https://nextjs.org/docs/pages/building-your-application/configuring/environment-variables#loading-environment-variables
-- You can use any .env file but it is recommended to use .env.local
 - There is no need to use dotenv because environment variables will be automatically loaded
 - **You can use environment variables only server side. You have to access to them in client components**
   - If you need access to them you can use NEXT_PUBLIC_ prefix
     - https://nextjs.org/docs/pages/building-your-application/configuring/environment-variables#bundling-environment-variables-for-the-browser
-    - 
+
+
+In Next.js können Sie verschiedene `.env`-Dateien verwenden, um Umgebungsvariablen für verschiedene Umgebungen zu definieren. Hier sind die verschiedenen `.env`-Dateien und ihre Verwendungszwecke:
+
+1. **`.env`**: Dies ist die Standarddatei für Umgebungsvariablen in Next.js. Die darin definierten Variablen gelten für alle Umgebungen, es sei denn, sie werden in spezifischeren Dateien überschrieben.
+
+2. **`.env.local`**: Diese Datei wird für lokale Entwicklungszwecke verwendet. Die Variablen in dieser Datei überschreiben die Variablen aus der `.env`-Datei, falls vorhanden. Sie ist besonders nützlich, um lokale Konfigurationen zu speichern, die nicht in der Versionskontrolle sein sollten.
+
+3. **`.env.development`, `.env.production`, `.env.test`**: Diese Dateien enthalten Umgebungsvariablen, die spezifisch für die Entwicklungs-, Produktions- bzw. Testumgebungen sind. Die Variablen in diesen Dateien überschreiben die entsprechenden Variablen in der `.env`-Datei und in der `.env.local`-Datei, wenn vorhanden. Sie ermöglichen es Ihnen, Umgebungsvariablen je nach Umgebung anzupassen, ohne die Standarddatei `.env` zu ändern.
+
+Die Verwendung von spezifischen `.env`-Dateien ermöglicht eine saubere und kontextabhängige Konfiguration von Umgebungsvariablen für verschiedene Entwicklungsphasen und Umgebungen. Dies erleichtert die Verwaltung und Bereitstellung von Anwendungen in verschiedenen Umgebungen, ohne dass Änderungen an der Codebasis vorgenommen werden müssen.
+
+
+
+<br><br>
+<br><br>
 
 ## Referencing Other Variables
 - Next.js will automatically expand variables that use $ to reference other variables e.g. $VARIABLE inside of your .env* files. This allows you to reference other secrets. For example:
