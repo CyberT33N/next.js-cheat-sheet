@@ -3525,20 +3525,36 @@ export const comments = [
 
 - Create `src/app/comments/route.ts`
   - **data.ts is not an next.js file convention name**
-```javascript
-import { comments } from './data'
+    - Method #1 - Response (https://developer.mozilla.org/en-US/docs/Web/API/Response?retiredLocale=de  )
+	```javascript
+	import { comments } from './data'
+	
+	/**
+	 * Handles the GET request.
+	 * @returns {Response} The response with the message "Dashboard".
+	 */
+	export async function GET() {
+	    return Response.json(comments)
+	}
+	```
+	- To test open thunderclient ín vs code an make new request
+	
 
-/**
- * Handles the GET request.
- * @returns {Response} The response with the message "Dashboard".
- */
-export async function GET() {
-    return Response.json(comments)
-}
-```
-- To test open thunderclient ín vs code an make new request
+    - Method #2 - NextResoponse (https://nextjs.org/docs/app/api-reference/functions/next-response)
+	```javascript
+        import { NextResponse } from 'next/server'
+	import { comments } from './data'
+	
+	/**
+	 * Handles the GET request.
+	 * @returns {Response} The response with the message "Dashboard".
+	 */
+	export async function GET() {
+	    return NextResponse.json({ data: comments }, { status: 200 })
+	}
+	```
 
-
+	
 
 
 
