@@ -5672,5 +5672,13 @@ _______________________________________________________
 - There is no need to use dotenv because environment variables will be automatically loaded
 - **You can use environment variables only server side. You have to access to them in client components**
   - If you need access to them you can use NEXT_PUBLIC_ prefix
-    - https://nextjs.org/docs/pages/building-your-application/configuring/environment-variables#bundling-environment-variables-for-the-browser 
+    - https://nextjs.org/docs/pages/building-your-application/configuring/environment-variables#bundling-environment-variables-for-the-browser
+    - 
+
+## Referencing Other Variables
+- Next.js will automatically expand variables that use $ to reference other variables e.g. $VARIABLE inside of your .env* files. This allows you to reference other secrets. For example:
+```
+TWITTER_USER=nextjs
+TWITTER_URL=https://twitter.com/$TWITTER_USER
+```
 
