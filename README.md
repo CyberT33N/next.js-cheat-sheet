@@ -5741,7 +5741,7 @@ _______________________________________________________
 
 ### Install
 ```shell
-npm install -D jest jest-environment-jsdom @testing-library/react @testing-library/jest-dom
+npm install -D jest jest-environment-jsdom @testing-library/react @testing-library/jest-dom @types/jest
 ```
 
 <br><br>
