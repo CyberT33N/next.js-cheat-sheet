@@ -5731,8 +5731,12 @@ _______________________________________________________
 # Testing
 - https://nextjs.org/docs/app/building-your-application/testing
 
-<br><br>
 
+
+
+
+<br><br>
+<br><br>
 
 ## Jest
 - https://nextjs.org/docs/app/building-your-application/testing/jest
@@ -5775,6 +5779,10 @@ const config: Config = {
 export default createJestConfig(config)
 ```
 
+
+
+
+<br><br>
 <br><br>
 
 ### package.json
@@ -5790,3 +5798,32 @@ export default createJestConfig(config)
 ```
 - jest --watch will re-run tests when a file is changed. For more Jest CLI options, please refer to the Jest Docs
   - https://jestjs.io/docs/cli#reference
+
+
+
+
+<br><br>
+<br><br>
+
+
+### Load environment variables
+
+1. Add to jest.config.ts:
+```javascript
+setupFiles: ['<rootDir>/test/setup-tests.ts']
+```
+
+<br><br>
+
+2. Create test/setup-tests.ts
+```javascript
+import { loadEnvConfig } from '@next/env'
+loadEnvConfig(process.cwd())
+```
+
+<br><br>
+
+3. Create in your root .env.test
+```
+ANY_ENV=test
+```
