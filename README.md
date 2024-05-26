@@ -5781,11 +5781,10 @@ export default createJestConfig(config)
 ```
 {
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "test": "jest",
-    "test:watch": "jest --watch"
+  "test": "npm run test:unit && npm run test:integration",
+    "test:watch": "jest --watch",
+    "test:integration": "jest test/integration",
+    "test:unit": "jest test/unit"
   }
 }
 ```
