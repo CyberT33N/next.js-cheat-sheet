@@ -5812,6 +5812,7 @@ export default createJestConfig(config)
 
 
 
+
 <br><br>
 <br><br>
 
@@ -5836,6 +5837,7 @@ export default createJestConfig(config)
 <br><br>
 
 
+
 ### Load environment variables
 
 1. Add to jest.config.ts:
@@ -5856,4 +5858,107 @@ loadEnvConfig(process.cwd())
 3. Create in your root .env.test
 ```
 ANY_ENV=test
+```
+
+
+
+
+### Example Integration Test
+```typescript
+// ==== DEPENDENCIES ====
+import sinon from 'sinon'
+import axios from 'axios'
+import { Web3 } from 'web3'
+
+// ==== NEXT.JS ====
+import { type NextRequest, type NextResponse } from 'next/server'
+
+// ==== ROUTES ====
+import { GET } from '@/app/api/coins/balance/eth/route'
+
+// ==== UTILS ====
+import EthCoinManager from '@/utils/crypto/eth/EthCoinManager'
+
+describe('[API] - GET /coins/balance/eth', () => {
+    const createNextRequest = (searchParams: {}) => ({
+        nextUrl: {
+            searchParams : new URLSearchParams(searchParams)
+        }
+    } as NextRequest)
+
+    describe('[ERROR]', () => {
+        describe('[QUERY PARAM]', () => {
+            test('should get current balance of eth address in USD', async() => {
+                const response = await GET(createNextRequest({}))
+                const responseData = await response.json()
+
+                expect(response.status).toBe(400)
+                expect(responseData.error).toBe('Missing parameter "address"')
+            })
+        })
+    })
+
+    describe('[SUCCESS]', () => {
+        let axiosStub: sinon.SinonStub
+        let getBalanceStub: sinon.SinonStub
+
+        const { WALLET_ETH_ADDRESS } = process.env
+
+        const responseBody = {
+            status: 200,
+            data: {
+                status: {
+                    timestamp: '2024-05-26T16:32:24.585Z',
+                    error_code: 0,
+                    error_message: null,
+                    elapsed: 57,
+                    credit_count: 1,
+                    notice: null
+                }
+            }
+        }
+
+        const balanceWei = 3346277555856564n
+
+        beforeEach(() => {
+            axiosStub = sinon.stub(axios, 'request').resolves(responseBody)
+
+            getBalanceStub = sinon.stub(EthCoinManager.prototype, 'getBalance').callsFake(() => {
+                return Promise.resolve(balanceWei)
+            })
+        })
+        
+        afterEach(() => {
+            axiosStub.restore()
+            getBalanceStub.restore()
+        })
+        
+        test('should get current balance of eth address in USD', async() => {
+            const response = await GET(createNextRequest({ address: WALLET_ETH_ADDRESS }))
+            const responseData = await response.json()
+
+            // ==== WEB3 MOCKS ====
+            expect(getBalanceStub.calledOnce).toBe(true)
+            expect(getBalanceStub.calledOnceWithExactly(WALLET_ETH_ADDRESS)).toBe(true)
+
+            // ==== AXIOS MOCKS ====
+            expect(axiosStub.calledOnce).toBe(true)
+            expect(axiosStub.calledOnceWithExactly({
+                url: `${process.env.COINMARKETCAP_API_COIN_LISTINGS_URL}?symbol=ETH&convert=USD`,
+                method: 'GET',
+                headers: {
+                    'X-CMC_PRO_API_KEY': process.env.API_KEY_COINMARKETCAP
+                }
+            })).toEqual(true)
+
+            // ==== RESPONSE ====
+            expect(response.status).toBe(200)
+
+            const etherPriceUSD = responseBody.data.data.ETH.quote.USD.price
+            const web3 = new Web3()
+            const balanceEther = web3.utils.fromWei(balanceWei, 'ether')
+            expect(responseData.balance).toEqual(Number(balanceEther) * etherPriceUSD)
+        })
+    })
+})
 ```
