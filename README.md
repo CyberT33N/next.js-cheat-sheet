@@ -3900,6 +3900,11 @@ export async function GET(req: NextRequest) {
     const { searchParams } = req.nextUrl
     const query = searchParams.get('query')
 
+    // Or to get all
+      const {
+        query
+    } = Object.fromEntries(searchParams.entries()) 
+
     const filteredComments = query ?
         comments.filter(comment => comment.text.includes(query)) :
         comments
