@@ -5611,7 +5611,59 @@ export default function MyApp({ Component, pageProps }) {
 ```
 
 
+## Strategy
+- https://nextjs.org/docs/pages/building-your-application/optimizing/scripts#strategy
 
+Although the default behavior of next/script allows you to load third-party scripts in any page or layout, you can fine-tune its loading behavior by using the strategy property:
+
+    beforeInteractive: Load the script before any Next.js code and before any page hydration occurs.
+    afterInteractive: (default) Load the script early but after some hydration on the page occurs.
+    lazyOnload: Load the script later during browser idle time.
+    worker: (experimental) Load the script in a web worker.
+
+```javascript
+'use client'
+
+// ==== NEXT.JS ====
+import Script from 'next/script'
+
+// ==== REACT ====
+import React, { useState, useEffect, useRef } from 'react'
+
+export default function Home() {
+    const [vantaEffect, setVantaEffect] = useState(null)
+    const myRef = useRef(null)
+
+    useEffect(() => {
+        if (typeof window !== 'undefined' && window.VANTA) {
+            if (!vantaEffect) {
+                console.log('window.VANTA: ', window.VANTA)
+                setVantaEffect(window.VANTA.FOG({
+                    el: myRef.current
+                }))
+            }
+
+            return () => {
+                if (vantaEffect) vantaEffect.destroy()
+            }
+        }
+    }, [vantaEffect])
+
+    return (
+        <>
+            <div ref={myRef}>
+                <section className="flex flex-col items-center justify-center gap-6 py-8 md:py-10">
+                   
+                </section>
+            </div>
+
+            <Script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js" strategy="beforeInteractive"/>
+            <Script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.fog.min.js" strategy="beforeInteractive"/>
+        </>
+    )
+}
+
+```
 
 
 
