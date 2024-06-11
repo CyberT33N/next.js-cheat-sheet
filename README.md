@@ -5581,6 +5581,64 @@ export default function ProductDetailPage() {
 
 
 
+
+
+
+<br><br>
+<br><br>
+
+_______________________________________________________
+_______________________________________________________
+
+<br><br>
+<br><br>
+
+# Scripts
+- https://nextjs.org/docs/pages/building-your-application/optimizing/scripts
+- To load a third-party script for all routes, import next/script and include the script directly in your custom _app:To load a third-party script for all routes, import next/script and include the script directly in your custom _app:
+- pages/_app.js:
+```javascript
+import Script from 'next/script'
+ 
+export default function MyApp({ Component, pageProps }) {
+  return (
+    <>
+      <Component {...pageProps} />
+      <Script src="https://example.com/script.js" />
+    </>
+  )
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <br><br>
 <br><br>
 
