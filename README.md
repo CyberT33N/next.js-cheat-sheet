@@ -5610,6 +5610,7 @@ export default function MyApp({ Component, pageProps }) {
 }
 ```
 
+<br><br>
 
 ## Strategy
 - https://nextjs.org/docs/pages/building-your-application/optimizing/scripts#strategy
@@ -5669,7 +5670,118 @@ export default function Home() {
 
 
 
+<br><br>
 
+## Inline Scripts
+- In this case we use our root layout.tsx
+```typescript
+import '@/styles/globals.css'
+import { Metadata, Viewport } from 'next'
+import { siteConfig } from '@/config/site'
+import { fontSans } from '@/config/fonts'
+import { Providers } from './providers'
+import { Navbar } from '@/components/navbar'
+import { Link } from '@nextui-org/link'
+import clsx from 'clsx'
+
+// ==== NEXT.JS ====
+import Script from 'next/script'
+
+export const metadata: Metadata = {
+    title: {
+        default: siteConfig.name,
+        template: `%s - ${siteConfig.name}`
+    },
+    description: siteConfig.description,
+    icons: {
+        icon: '/favicon.ico'
+    }
+}
+
+export const viewport: Viewport = {
+    themeColor: [
+        { media: '(prefers-color-scheme: light)', color: 'white' },
+        { media: '(prefers-color-scheme: dark)', color: 'black' }
+    ]
+}
+
+/**
+ * Root layout component for the application.
+ * 
+ * @param {any} children - The child components to render within the layout.
+ * @returns {any} The rendered layout component.
+ */
+export default function RootLayout({
+    children
+}: {
+	children: React.ReactNode;
+}) {
+    return (
+        <html lang="en" suppressHydrationWarning>
+            <head>
+                <Script 
+                    src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"
+                    strategy="beforeInteractive"
+                />
+                <Script 
+                    src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.fog.min.js"
+                    strategy="beforeInteractive"
+                />
+
+                <Script id="show-banner">
+                    {`
+                    VANTA.FOG({
+                        el: "#rootLayout",
+                        mouseControls: true,
+                        touchControls: true,
+                        gyroControls: false,
+                        minHeight: 200.00,
+                        minWidth: 200.00,
+                        highlightColor: 0x9353d3,
+                        midtoneColor: 0xfc0a51,
+                        lowlightColor: 0x0,
+                        baseColor: 0x0,
+                        blurFactor: 0.25,
+                        speed: 0.50,
+                        zoom: 0.70
+                      })
+                `}
+                </Script>
+            </head>
+            <body
+                className={clsx(
+                    'min-h-screen bg-background font-sans antialiased',
+                    fontSans.variable
+                )}
+            >
+                <Providers themeProps={{ attribute: 'class', defaultTheme: 'dark' }}>
+                    <div className="relative flex flex-col h-screen" id="rootLayout">
+
+                        <Navbar />
+
+                        <main className="container mx-auto max-w-7xl pt-2 px-6 flex-grow">
+                            {children}
+                        </main>
+
+                        {/* <footer className="w-full flex items-center justify-center py-3">
+                            <Link
+                                isExternal
+                                className="flex items-center gap-1 text-current"
+                                href="https://github.com/CyberT33N"
+                                title="CyberT33N homepage"
+                            >
+                                <span className="text-default-600">Powered by</span>
+                                <p className="text-primary">CyberT33N</p>
+                            </Link>
+                        </footer> */}
+                    </div>
+                </Providers>
+            </body>
+        </html>
+    )
+}
+
+```
 
 
 
