@@ -5799,6 +5799,80 @@ export default function RootLayout({
 
 
 
+<br><br>
+<br><br>
+
+_______________________________________________________
+_______________________________________________________
+
+<br><br>
+<br><br>
+
+# window
+
+<br><br>
+
+## Load Dependencies to window
+
+<br><br>
+
+lib/three.js
+```javascript
+// lib/three.js
+import * as THREE from 'three'
+
+if (typeof window !== 'undefined') {
+    window.THREE = THREE
+}
+
+export default THREE
+```
+
+<br><br>
+
+- app/providers.tsx
+```javascript
+'use client'
+
+import * as React from 'react'
+import { NextUIProvider } from '@nextui-org/system'
+import { useRouter } from 'next/navigation'
+import { ThemeProvider as NextThemesProvider } from 'next-themes'
+import { ThemeProviderProps } from 'next-themes/dist/types'
+
+import { useEffect } from 'react'
+
+export interface ProvidersProps {
+	children: React.ReactNode;
+	themeProps?: ThemeProviderProps;
+}
+
+export function Providers({ children, themeProps }: ProvidersProps) {
+    const router = useRouter()
+
+    useEffect(() => {
+        const loadThree = async() => {
+            await import('@/lib/three')
+        }
+        
+        loadThree()
+    }, [])
+
+    return (
+        <NextUIProvider navigate={router.push}>
+            <NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
+        </NextUIProvider>
+    )
+}
+
+```
+
+
+
+
+
+
+
 
 
 
