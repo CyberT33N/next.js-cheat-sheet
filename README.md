@@ -5587,6 +5587,7 @@ _______________________________________________________
 # Instrumentation
 - https://nextjs.org/docs/app/api-reference/file-conventions/instrumentation
 - Run Code when the server starts up (bootstraping)
+- **WARNING - Webpack will compile the code and this means that some server side code is maybe not working because you try to import/require modiles which use fs/promise and so one*
 
 - next.config.js
 ```typescript
