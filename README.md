@@ -5610,8 +5610,29 @@ export function register() {
 ```
 
 
+## Bootstraping
 
+### Method #1
+- next.config.js
+- https://github.com/vercel/next.js/blob/5e6b008b561caf2710ab7be63320a3d549474a5b/packages/next/shared/lib/constants.ts#L19-L23
+- The most preferred way to execute the foo function only when the Next.js server's starting up is by writing the logic in the next.config.js file. However, since the next config can be loaded in different lifecycles/phases of Next.js, it's important to specifically target the phase when the server is starting up. To achieve this, the constants provided by the Next.js team in next/constants (defined here) can be used which will make the next.config.js file look something like this:
+```
+const { PHASE_DEVELOPMENT_SERVER } = require('next/constants')
 
+module.exports = async(phase, { defaultConfig }) => {
+    if (phase === PHASE_DEVELOPMENT_SERVER) {
+        //..
+    }
+
+    const nextConfig = {
+        experimental: {
+            instrumentationHook: true
+        }
+    }
+
+    return nextConfig
+}
+```
 
 
 
