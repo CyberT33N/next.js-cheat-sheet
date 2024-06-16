@@ -5575,6 +5575,62 @@ export default function ProductDetailPage() {
 
 
 
+<br><br>
+<br><br>
+
+_______________________________________________________
+_______________________________________________________
+
+<br><br>
+<br><br>
+
+# Instrumentation
+- https://nextjs.org/docs/app/api-reference/file-conventions/instrumentation
+- Run Code when the server starts up (bootstraping)
+
+- next.config.js
+```typescript
+const nextConfig = {
+    experimental: {
+        instrumentationHook: true
+    }
+}
+
+module.exports = nextConfig
+```
+
+- instrumentation.ts
+```typescript
+import { registerOTel } from '@vercel/otel'
+ 
+export function register() {
+  registerOTel('next-app')
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
