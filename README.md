@@ -6413,3 +6413,71 @@ describe('[API] - GET /coins/balance/eth', () => {
     })
 })
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+_______________________________________________________
+_______________________________________________________
+
+<br><br>
+<br><br>
+
+# Troubleshooting
+
+## Webpack
+
+### Critical dependency: the request of a dependency is an expression
+- import statements will not work when you directly include variables. Recently, I also faced a similar issue but when I used string interpolation, the warning went away.
+
+Not working:
+```javascript
+const getModule = (moduleName) => {
+    const module = React.lazy(() => import(moduleMapping[moduleName]));
+    return module;
+};
+```
+
+Working:
+```javascript
+const getModule = (moduleName) => {
+    const module = React.lazy(() => import(`${moduleMapping[moduleName])}`);
+    return module;
+};
+```
