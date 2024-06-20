@@ -124,13 +124,34 @@ _______________________________________________________
 
 # File/FolderStructure
 
+
+
+
+
+
+
+
+
 <br><br>
 
 ## public
 - This folder contains public assets like images
 
 
+<br><br>
+<br><br>
 
+#### tsconfig.json
+
+
+<br><br>
+<br><br>
+
+#### next.config.js
+
+
+<br><br>
+<br><br>
 <br><br>
 <br><br>
 
@@ -192,9 +213,36 @@ _______________________________________________________
 #### middleware.ts
 - https://github.com/CyberT33N/next.js-cheat-sheet/#middleware
   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
 <br><br>
 
-#### tsconfig.json
+_______________________________________________________
+_______________________________________________________
+
+<br><br>
+<br><br>
+
+# next.config.js
+
+
+
+
 
 
 
