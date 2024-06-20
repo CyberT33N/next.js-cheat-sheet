@@ -142,13 +142,14 @@ _______________________________________________________
 <br><br>
 
 #### tsconfig.json
-
+- Typescript config gile
 
 <br><br>
 <br><br>
 
 #### next.config.js
-
+- Next.js config file
+- https://github.com/CyberT33N/next.js-cheat-sheet/blob/main/README.md#nextconfigjs-1
 
 <br><br>
 <br><br>
@@ -239,6 +240,25 @@ _______________________________________________________
 <br><br>
 
 # next.config.js
+- https://nextjs.org/docs/app/api-reference/next-config-js
+
+<br><br>
+
+## Webpack custom config
+- https://nextjs.org/docs/app/api-reference/next-config-js/webpack
+
+next.config.js
+```javascript
+module.exports = {
+  webpack: (
+    config,
+    { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack }
+  ) => {
+    // Important: return the modified config
+    return config
+  },
+}
+```
 
 
 
