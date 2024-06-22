@@ -6213,6 +6213,16 @@ _______________________________________________________
 - https://nextjs.org/docs/app/building-your-application/testing
 
 
+<br><br>
+<br><br>
+
+
+## Vitest (recommended)
+- Compared to jest vitest has build in typescript support. In jest you will struggle with setup the correct config files
+- https://nextjs.org/docs/app/building-your-application/testing/vitest
+
+
+
 
 
 
