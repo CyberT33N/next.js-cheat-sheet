@@ -6498,3 +6498,5 @@ const getModule = (moduleName) => {
     return module;
 };
 ```
+
+**Also make sure to use process.cwd() when you create a path for importing. Use relative paths e.g. `const path = '../../../models/**/*.model.js'`**
