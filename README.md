@@ -5657,7 +5657,10 @@ _______________________________________________________
 - Run Code when the server starts up (bootstraping)
 
 
-- next.config.js
+<br><br>
+<br><br>
+
+next.config.js
 ```typescript
 const nextConfig = {
     experimental: {
@@ -5668,8 +5671,12 @@ const nextConfig = {
 module.exports = nextConfig
 ```
 
-- instrumentation.ts
-- **You can not import dependencies on top level because of webpack transpile. If needed include them in your if statement
+
+<br><br>
+<br><br>
+
+instrumentation.ts
+- **You can not import dependencies on top level because of webpack transpile. If needed include them in your if statement**
 ```typescript
 export async function register() {
     console.log('process.env.NEXT_RUNTIME', process.env.NEXT_RUNTIME)
