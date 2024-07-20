@@ -4368,6 +4368,7 @@ ____________________________________
 
 
 # Middleware
+- If you want that your middle is directly enabled for all requests then place middleware.ts into the root of your project
 
 <br><br>
 
