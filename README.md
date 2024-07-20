@@ -6478,10 +6478,31 @@ _______________________________________________________
 
 # Troubleshooting
 
+
+<br><br>
+<br><br>
+
 ## Webpack
+
+<br><br>
+
+### module not found (dynamic import)
+- https://github.com/CyberT33N/webpack-cheat-sheet/blob/main/README.md#dynamic-expressions-in-import
+
+<br><br>
 
 ### Critical dependency: the request of a dependency is an expression
 - import statements will not work when you directly include variables. Recently, I also faced a similar issue but when I used string interpolation, the warning went away.
+```
+Your understanding is correct: Webpack can't statically analyze dynamic `require` calls because it needs to know module dependencies at build time. The warning appears because Webpack can't determine which module to include, so it includes all possible modules, leading to a larger bundle size.
+
+When you switch to using template literals, it might seem like a small change, but it can trick Webpack's static analysis. This happens because the syntax of template literals can sometimes prevent Webpack from recognizing the dynamic nature of the require statement.
+
+However, this doesn't fundamentally solve the problem. Webpack still won't know the exact module to include at build time and might still bundle more than necessary, but the warning goes away because Webpack's heuristic for detecting dynamic requires is not triggered.
+
+To address the root problem properly, you can use Webpack's `require.context` method. This method creates a context module that dynamically requires all modules matching a given pattern, but does so in a way that Webpack can analyze statically.
+
+```
 
 Not working:
 ```javascript
@@ -6498,5 +6519,3 @@ const getModule = (moduleName) => {
     return module;
 };
 ```
-
-**Also make sure to use process.cwd() when you create a path for importing. Use relative paths e.g. `const path = '../../../models/**/*.model.js'`**
