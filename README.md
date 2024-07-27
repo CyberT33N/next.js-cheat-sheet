@@ -263,6 +263,20 @@ module.exports = {
 
 
 
+<br><br>
+<br><br>
+
+
+## distDir
+- https://nextjs.org/docs/app/api-reference/next-config-js/distDir
+- You can specify a name to use for a custom build directory to use instead of .next.
+```shell
+module.exports = {
+  distDir: 'build',
+}
+```
+
+
 
 
 
