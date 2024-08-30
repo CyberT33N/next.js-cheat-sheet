@@ -5670,6 +5670,7 @@ _______________________________________________________
 # Instrumentation
 - https://nextjs.org/docs/app/api-reference/file-conventions/instrumentation
 - Run Code when the server starts up (bootstraping)
+- IInstrumentation hooks or environments (e.g., testing frameworks, profiling tools) often operate outside of the TypeScript compiler's scope and rely directly on Node.js to load modules. So your tsconfig.json which is working for your next.js app will may not work as expected for your Instrumenation
 
 
 <br><br>
