@@ -5677,7 +5677,7 @@ _______________________________________________________
 <br><br>
 
 next.config.js
-- Does not work with next.config.cjs and type:module in package.json
+- Works aswell with type:module and next.config.mjs
 ```typescript
 const nextConfig = {
     experimental: {
