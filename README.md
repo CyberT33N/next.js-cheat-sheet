@@ -2515,8 +2515,6 @@ ____________________________________________________
 - Each slot of your dashboard can essentially function as a mini-application, complete with its own navigation and state management
 - This is especially useful in a complex application such as our dashboard where different sections service disctinct purposes
 
-</details>
-
 
 
 
@@ -2706,6 +2704,8 @@ export default function Users() {
 
 
 
+</details>
+
 
 
 
@@ -2766,6 +2766,8 @@ ____________________________________________________
 
 
 ## Unmatched Routes
+
+<details><summary>Click to expand..</summary>
 
 ### Navigation from the UI
 - In the case of navigation within the UI, Next.js retains the previously active state of a slot regardless of changes in the URL
@@ -2873,7 +2875,7 @@ export default function ArchivedNotifications() {
 		    return <Card>Revenue</Card>
 		}
       ```
-
+</details>
 
 
 
@@ -2924,6 +2926,9 @@ _________________________________________________
 
 ## Conditional Routes
 - Decide which content should be rendered by using conditions
+
+
+<details><summary>Click to expand..</summary>
 
 <br><br>
 
@@ -2997,16 +3002,7 @@ export default function DashboardLayout({
 
 
 
-
-
-
-
-
-
-
-
-
-
+</details>
 
 
 
@@ -3054,6 +3050,9 @@ ___________________________________
 
 <br><br>
 <br><br>
+
+<details><summary>Click to expand..</summary>
+
 
 ### Conventions
 - (.) to match segments on the same level
@@ -3246,7 +3245,7 @@ export default function InterceptedF3() {
     - **If you reload the page now you will see content of `src/app/about/page.tsx`**
 
 
-
+</details>
 
 
 
@@ -3300,6 +3299,8 @@ _________________________________________________________
 - https://www.youtube.com/watch?v=mVOvx9eVHg0&list=PLC3y8-rFHvwjOKd6gdf4QtV1uYNiQnruI&index=32
 
 <br><br>
+
+<details><summary>Click to expand..</summary>
 
 1. Clone Project:
 - https://github.com/gopinav/Next.js-14-Tutorials
@@ -3576,6 +3577,15 @@ export default function PhotoModal({
 
 
 
+</details>
+
+
+
+
+
+
+
+
 
 
 
@@ -3619,6 +3629,10 @@ _________________________________________________________
 
 ## Route Handlers (route.ts)
 - https://www.youtube.com/watch?v=25yY2RVRq_M&list=PLC3y8-rFHvwjOKd6gdf4QtV1uYNiQnruI&index=33
+
+
+<details><summary>Click to expand..</summary>
+
 
 <br><br>
 
@@ -3720,7 +3734,7 @@ export async function GET() {
 
 
 
-
+</details>
 
 
 
@@ -3766,6 +3780,9 @@ _____________________________________________________________
 - https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client
 
 - The example below will use memory data and not a databse to keep it simple
+
+
+<details><summary>Click to expand..</summary>
 
 <br><br>
 <br><br>
@@ -3824,7 +3841,7 @@ export const comments = [
 
 	
 
-
+</details>
 
 
 
@@ -3857,6 +3874,9 @@ export const comments = [
 
 ## Handling POST Request
 - https://www.youtube.com/watch?v=pzPS7Fn-8tE&list=PLC3y8-rFHvwjOKd6gdf4QtV1uYNiQnruI&index=36
+
+<details><summary>Click to expand..</summary>
+
 
 - `src/app/comments/route.ts`
 ```
@@ -3902,7 +3922,7 @@ export async function POST(req: Request) {
 
 
 
-
+</details>
 
 
 
@@ -3939,7 +3959,8 @@ __________________________________________________
 ## Dynamic Route Handlers
 - https://www.youtube.com/watch?v=TGbC8F0gjC8&list=PLC3y8-rFHvwjOKd6gdf4QtV1uYNiQnruI&index=36
 
-
+<details><summary>Click to expand..</summary>
+	
 <br><br>
 
 - In order to get the document for a specific id we can do:
@@ -3968,7 +3989,7 @@ export async function GET(
 	```
 
 
-
+</details>
 
 
 
@@ -3994,6 +4015,8 @@ export async function GET(
 - https://www.youtube.com/watch?v=bDbBh7lEamE&list=PLC3y8-rFHvwjOKd6gdf4QtV1uYNiQnruI&index=37
 
 <br><br>
+
+<details><summary>Click to expand..</summary>
 
 - In order to patch the document for a specific id we can do:
   - Create `src/app/comments/[id]/route.ts`:
@@ -4033,7 +4056,7 @@ export async function PATCH(
 		}
 		```
 
-
+</details>
 
 
 
@@ -4080,6 +4103,8 @@ export async function PATCH(
 
 <br><br>
 
+<details><summary>Click to expand..</summary>
+
 - In order to delete the document for a specific id we can do:
   - Create `src/app/comments/[id]/route.ts`:
 ```javascript
@@ -4106,6 +4131,7 @@ export async function DELETE(
 
 
 
+</details>
 
 
 
@@ -4151,6 +4177,8 @@ __________________________________________________
 - https://www.youtube.com/watch?v=fuxSl-K0oI0&list=PLC3y8-rFHvwjOKd6gdf4QtV1uYNiQnruI&index=40
 - E.q. you want to open localhost:3000/comments?query=first
 
+<details><summary>Click to expand..</summary>
+
 <br><br>
 
 - In order to handle query parameters do:
@@ -4184,7 +4212,7 @@ export async function GET(req: NextRequest) {
 - GET localhost:3000/comments?query=first
 
 
-
+</details>
 
 
 
@@ -4198,6 +4226,9 @@ export async function GET(req: NextRequest) {
 # Redirects in Route Handlers
 - If you would visit http://localhost:3000/comments/4 then you would get a 404 because we only have 3 documents. If you want to redirect the user to a specific page in this you can use:
   - e.g. src/app/comments/[id]/route.ts
+ 
+<details><summary>Click to expand..</summary>
+	
 ```javascript
 import { redirect } from 'next/navigation'
 import { comments } from '../data'
@@ -4222,6 +4253,7 @@ export async function GET(
 ```
 - In this case the users gets redirected to http://localhost:3000/comments
 
+</details>
 
 
 
@@ -4260,6 +4292,8 @@ export async function GET(
 
 
 # Headers in Route Handlers
+
+<details><summary>Click to expand..</summary>
 
 <br><br>
 
@@ -4337,7 +4371,7 @@ export async function GET(request: NextRequest) {
 
 
 
-
+</details>
 
 
 
@@ -4374,6 +4408,8 @@ _______________________________________
 <br><br>
 
 # Cookies in Route Handlers
+
+<details><summary>Click to expand..</summary>
 
 <br><br>
 
@@ -4434,6 +4470,7 @@ export async function GET(request: NextRequest) {
 
 
 
+</details>
 
 
 
@@ -4474,6 +4511,8 @@ _______________________________________
 
 # Caching in Route Handlers
 - Route Handlers are cached by default when using the GET method with the Response object in Next.js
+
+<details><summary>Click to expand..</summary>
 
 - Create /src/app/time/route.ts
 ```typescript
@@ -4531,7 +4570,7 @@ export async function GET() {
 - using any HTTP method other than GET
 
 
-
+</details>
 
 
 
@@ -4570,7 +4609,10 @@ ____________________________________
 # Middleware
 - If you want that your middle is directly enabled for all requests then place middleware.ts into the root of your project
 
-<br><br>
+<details><summary>Click to expand..</summary>
+
+
+
 
 ## Redirect
 - https://nextjs.org/docs/app/api-reference/functions/next-response#redirect
@@ -4689,6 +4731,12 @@ export function middleware(request: NextRequest) {
 - When you visit e.g. 127.0.0.1:3000/profile you will see in dev tools > Network the Response Header `Custom-Header: custom-value`
 
 
+</details>
+
+
+
+
+
 
 
 
@@ -4730,6 +4778,8 @@ ___________________________
 - In Next.js, choosing the right time and place to do this rendering is vital for building a performant application
 - CSS, SSR and RSCs
 
+
+<details><summary>Click to expand..</summary>
 
 <br><br>
 
@@ -4878,13 +4928,6 @@ ___________________________
 - create an "all or nothing" waterfall problem that spans from the server to the client, where each issue must be resolved before moving to the next one
 
 - This is inefficient is some parts of your app are slower than others, as is often the case in real-world apps
-
-
-
-
-
-
-
 
 
 
@@ -5156,6 +5199,24 @@ ___________________________
 
 
 
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -5194,6 +5255,8 @@ _________________________________________________________________
 # Server Components
 - By default, every component in a Next.js app is considered a server component
 - Including the root layout (src/app/layout.tsx) and root page (src/app/page.tsx)
+
+<details><summary>Click to expand..</summary>
 
 1. Create new project
 ```shell
@@ -5236,7 +5299,7 @@ export default function AboutPage() {
 }
 ```
 
-
+</details>
 
 
 
@@ -5250,6 +5313,8 @@ export default function AboutPage() {
 
 
 # Client Components
+
+<details><summary>Click to expand..</summary>
 
 1. Create client component `dashboard/page.tsx`
 ```typescript
@@ -5291,6 +5356,9 @@ Now open:
         - **Even if it is may confusing this means a client component executes once on the server and then on the client**
 
 
+
+
+</details>
 
 
 
@@ -5339,6 +5407,7 @@ _________________________________________________
   - Client side: Your browser,
   - Server side: Next.js & React
 
+<details><summary>Click to expand..</summary>
 
 <br><br>
 
@@ -5363,7 +5432,7 @@ _________________________________________________
 
 
 
-
+</details>
 
 
 
@@ -5388,6 +5457,8 @@ _________________________________________________
 - Dynamic rendering
 - Streaming
 
+
+<details><summary>Click to expand..</summary>
 
 <br><br>
 <br><br>
@@ -5513,6 +5584,24 @@ Route (app)                              Size     First Load JS
   - Indicated dynamic rendering - server-rendered on demand using Node.js
 
 
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -5526,6 +5615,8 @@ Route (app)                              Size     First Load JS
 
 #### .next folder
 - `npm run build` will save the output in the .next folder which contains various files and folders essential for serving our application to incoming requests from the browser
+
+<details><summary>Click to expand..</summary>
 
 <br><br>
 
@@ -5559,7 +5650,7 @@ Route (app)                              Size     First Load JS
         - The component code for the dashboard represented by `/page-xxxxxxx.js` and has also been downloaded
           - If you click on thedashboard link you will notice that the route will instantly work without loading. This is because it is rendered without the need to download any additional resources from the server. It already includes everything for client side navigation
 
-
+</details>
 
 
 
@@ -5630,6 +5721,8 @@ Route (app)                              Size     First Load JS
 - It is useful when a route has data that is personalized to the user or contains information that can only be known at request time, such as cookies or the URL's search parameters
   - e.g. news website, personalized e-commerce pages or social media feeds are some examples
 
+<details><summary>Click to expand..</summary>
+
 <br><br>
 <br><br>
 
@@ -5678,7 +5771,7 @@ export default function AboutPage() {
 
 
 
-
+</details>
 
 
 
@@ -5725,6 +5818,9 @@ export default function AboutPage() {
 
 - Significantly improves both the initial page loading performance and the rendering of UI elements that rely on slower data fetches, which would otherwhise block the rendering of the entire route. Similiar to Suspense for SSR
   - Streaming is integrated into the Next.js App router by default
+
+<details><summary>Click to expand..</summary>
+
 
 <br><br>
 
@@ -5809,7 +5905,7 @@ export default function ProductDetailPage() {
 
 
 
-
+</details>
 
 
 
@@ -5856,7 +5952,9 @@ _______________________________________________________
 # Instrumentation
 - https://nextjs.org/docs/app/api-reference/file-conventions/instrumentation
 - Run Code when the server starts up (bootstraping)
-- IInstrumentation hooks or environments (e.g., testing frameworks, profiling tools) often operate outside of the TypeScript compiler's scope and rely directly on Node.js to load modules. So your tsconfig.json which is working for your next.js app will may not work as expected for your Instrumenation
+- Instrumentation hooks or environments (e.g., testing frameworks, profiling tools) often operate outside of the TypeScript compiler's scope and rely directly on Node.js to load modules. So your tsconfig.json which is working for your next.js app will may not work as expected for your Instrumenation
+
+<details><summary>Click to expand..</summary>
 
 
 <br><br>
@@ -5916,6 +6014,15 @@ module.exports = async(phase, { defaultConfig }) => {
 }
 ```
 
+</details>
+
+
+
+
+
+
+
+
 
 
 
@@ -5955,6 +6062,9 @@ _______________________________________________________
 
 # Scripts
 - https://nextjs.org/docs/pages/building-your-application/optimizing/scripts
+
+<details><summary>Click to expand..</summary>
+
 - To load a third-party script for all routes, import next/script and include the script directly in your custom _app:To load a third-party script for all routes, import next/script and include the script directly in your custom _app:
 - pages/_app.js:
 ```javascript
@@ -6144,6 +6254,25 @@ export default function RootLayout({
 ```
 
 
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -6169,6 +6298,8 @@ _______________________________________________________
 <br><br>
 
 # window
+
+<details><summary>Click to expand..</summary>
 
 <br><br>
 
@@ -6227,6 +6358,22 @@ export function Providers({ children, themeProps }: ProvidersProps) {
 
 ```
 
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -6247,6 +6394,8 @@ _______________________________________________________
 <br><br>
 
 # Images
+
+<details><summary>Click to expand..</summary>
 
 <br><br>
 
@@ -6298,7 +6447,7 @@ const App = () => (
 
 
 
-
+</details>
 
 
 
@@ -6346,6 +6495,8 @@ _______________________________________________________
 # Environment Variables
 - https://nextjs.org/docs/pages/building-your-application/configuring/environment-variables#loading-environment-variables
 - https://nextjs.org/docs/pages/building-your-application/configuring/environment-variables#default-environment-variables
+
+<details><summary>Click to expand..</summary>
   
 - There is no need to use dotenv because environment variables will be automatically loaded
 - **You can use environment variables only server side. You have to access to them in client components**
@@ -6377,7 +6528,7 @@ TWITTER_URL=https://twitter.com/$TWITTER_USER
 
 
 
-
+</details>
 
 
 
@@ -6424,6 +6575,8 @@ _______________________________________________________
 # Testing
 - https://nextjs.org/docs/app/building-your-application/testing
 
+
+<details><summary>Click to expand..</summary>
 
 <br><br>
 <br><br>
@@ -6643,6 +6796,17 @@ describe('[API] - GET /coins/balance/eth', () => {
 
 
 
+</details>
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -6683,6 +6847,7 @@ _______________________________________________________
 
 # Troubleshooting
 
+<details><summary>Click to expand..</summary>
 
 <br><br>
 <br><br>
@@ -6753,3 +6918,5 @@ const getModule = (moduleName) => {
     return module;
 };
 ```
+
+</details>
