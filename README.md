@@ -125,7 +125,7 @@ _______________________________________________________
 # File/FolderStructure
 
 
-
+<details><summary>Click to expand..</summary>
 
 
 
@@ -216,6 +216,20 @@ _______________________________________________________
   
 
 
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -241,6 +255,8 @@ _______________________________________________________
 
 # next.config.js
 - https://nextjs.org/docs/app/api-reference/next-config-js
+
+<details><summary>Click to expand..</summary>
 
 <br><br>
 
@@ -276,6 +292,23 @@ module.exports = {
 }
 ```
 
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -301,6 +334,10 @@ _______________________________________________________
 # tsconfig.json
 - https://nextjs.org/docs/app/building-your-application/configuring/absolute-imports-and-module-aliases
 
+
+<details><summary>Click to expand..</summary>
+
+
 <br><br>
 
 ## Absolute Imports and Module Path Aliases
@@ -312,7 +349,7 @@ import { Button } from '../../../components/button'
 import { Button } from '@/components/button'
 ```
 
-
+</details>
 
 
 
@@ -354,6 +391,9 @@ _______________________________________________________
 
 # package.json
 
+
+<details><summary>Click to expand..</summary>
+
 <br><br>
 
 ## npm run scripts
@@ -389,6 +429,25 @@ _______________________________________________________
 ```
 
 
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -422,12 +481,17 @@ _______________________________________________________
 
 # Components
 
+<details><summary>Click to expand..</summary>
+
 <br><br>
 
 ## RSC (React Server Components)
 - Introduced in version 18 and it splitting components in two types
 - https://github.com/CyberT33N/react.js-cheat-sheet/blob/main/README.md#components
 - In next.js all components are server components by default
+
+
+</details>
 
 
 
@@ -463,6 +527,10 @@ _______________________________________________________
 # Routing
 - Next.js has a file system based route mechanism
   - This means urls that can be accessed from client are the folder structure
+
+
+<details><summary>Click to expand..</summary>
+
 
 <br><br>
  
@@ -757,6 +825,27 @@ export default function ForgotPassword() {
 
 
 
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -790,6 +879,9 @@ _______________________________________________________
 <br><br>
 
 # Page (page.tsx)
+
+<details><summary>Click to expand..</summary>
+
 ```
 export default function Home() {
   return (
@@ -803,7 +895,7 @@ export default function Home() {
 - Only the code inside of the default function will be returned/rendered to the client. This means you can create components inside of this file or in a different location and then import them in your page.tsx file and use them inside the default function
 
 
-
+</details>
 
 
 
@@ -903,6 +995,8 @@ _______________________________________________________
 
 # Layouts (layout.tsx)
 - A layout is UI that is shared between multiple pages
+
+<details><summary>Click to expand..</summary>
 
 <br><br>
 <br><br>
@@ -1049,7 +1143,7 @@ export default function AuthLayout({
 
 
 
-
+</details>
 
 
 
@@ -1103,6 +1197,8 @@ _______________________________________________________
 
 
 # Metadata
+
+<details><summary>Click to expand..</summary>
 
 <br><br>
 <br><br>
@@ -1417,6 +1513,16 @@ export default function ProductsId({ params }: Props) {
 
 
 
+</details>
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1467,6 +1573,9 @@ _______________________________________________________
 
 ## Link Component Navigation
 - Using UI elements like links to navigate or programmatic navigation
+
+<details><summary>Click to expand..</summary>
+
 
 ### Link component
 - Next.js provide the link component for client-side navigation
@@ -1739,6 +1848,28 @@ export default function OrderProduct() {
 
 
 
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1789,6 +1920,8 @@ _______________________________________________________
 - Similar to layouts, templates also should accept a children prop which will render the nested segments in the route.
 
 
+
+<details><summary>Click to expand..</summary>
 
 
 
@@ -1868,6 +2001,30 @@ export default function AuthLayout({
 
 
 
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1909,6 +2066,9 @@ _______________________________________________________
 - **This file will wrap the page.tsx file and all it nested children**
 
 <br><br>
+
+
+<details><summary>Click to expand..</summary>
 
 ## Benefits
 - You can display the loading state as soon as a user navigates to a new route. The immediate feedback reassures users that their action has been acknowledged, reduces perceived loading times, and makes the application feel more responsive.
@@ -1956,7 +2116,7 @@ export default async function Blog() {
 
 
 
-
+</details>
 
 
 
@@ -2003,6 +2163,10 @@ _______________________________________________________
 - Will be wrapped around your related page.tsx 
 - Other components are still running and the app is not crashing and you can handle the error
   - e.g. redirect or make a page reload
+
+
+<details><summary>Click to expand..</summary>
+
 
 
 <br><br>
@@ -2268,7 +2432,7 @@ This means any error which happen in e.g. http://localhost:3000/products/1/revie
        
 
 
-
+</details>
 
 
 
@@ -2326,6 +2490,8 @@ ____________________________________________________
   - Each slot in then passed as a prop to its corresponding `layout.tsx` file
 
 
+<details><summary>Click to expand..</summary>
+
 <br><br>
 
 ### Benefits
@@ -2348,6 +2514,26 @@ ____________________________________________________
 ### Sub-navigation in routes
 - Each slot of your dashboard can essentially function as a mini-application, complete with its own navigation and state management
 - This is especially useful in a complex application such as our dashboard where different sections service disctinct purposes
+
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
