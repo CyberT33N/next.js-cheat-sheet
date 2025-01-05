@@ -825,6 +825,1139 @@ export default function ForgotPassword() {
 
 
 
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+____________________________________________________
+____________________________________________________
+<br><br>
+<br><br>
+
+
+## Parallel Routes
+- Parallel routes are an advanced routing mechanism that akkiws for the simultaneous rendering of multiple pages withing the same layout
+  - Image you would build an dashboard with multiple components e.g.:
+    - Notifications
+    - User analytics
+    - Revenue metrics
+
+- Parallel routes are defined using a feature known as slots
+  - Slots help structure our content in a modular fashion
+  - To define a slot, we use the `@folder` naming convention
+  - Each slot in then passed as a prop to its corresponding `layout.tsx` file
+
+
+<details><summary>Click to expand..</summary>
+
+<br><br>
+
+### Benefits
+- A clear benefit is their ability to split a single layout into various slots, making the code more manageable
+- Independent route handling
+- Sub-navigation
+
+
+<br><br>
+
+
+### Independent route handling
+- Each slot of your layout, such as user analytics or revenue metrics, can have its own loading and error states
+- This granular control is particulary beneficial in scenarios where different sections of the page load at varying speeds or encounter unique errors
+
+
+<br><br>
+
+
+### Sub-navigation in routes
+- Each slot of your dashboard can essentially function as a mini-application, complete with its own navigation and state management
+- This is especially useful in a complex application such as our dashboard where different sections service disctinct purposes
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+____________________________________________________
+____________________________________________________
+<br><br>
+<br><br>
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+### Example
+- Create src/app/complex-dashboard/layout.tsx
+```javascript
+/**
+ * Dashboard layout component.
+ *
+ * @param {Object} props - The component props.
+ * @param {React.ReactNode} props.children - The child components to render.
+ * @param {React.ReactNode} props.users - The users component to render.
+ * @param {React.ReactNode} props.revenue - The revenue component to render.
+ * @param {React.ReactNode} props.notifications - The notifications component to render.
+ * @returns {JSX.Element} The rendered Dashboard layout.
+ */
+export default function DashboardLayout({
+    children,
+    users,
+    revenue,
+    notifications
+}: {
+     children: React.ReactNode;
+     users: React.ReactNode;
+     revenue: React.ReactNode;
+     notifications: React.ReactNode;
+}) {
+    return (
+        <div>
+            <div>{children}</div>
+
+            <div style={{ display: ''flex }}>
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <div>{users}</div>
+                    <div>{revenue}</div>
+                </div>
+
+                <div style={{ display: 'flex', flex: 1 }}>
+                    <div>{notifications}</div>
+                </div>
+            </div>
+        </div>
+    )
+}
+```
+- children is equal to complex-dashboard/@children/page.tsx
+  - So technically e have 4 slots inside of our layout file
+
+
+<br><br>
+<br><br>
+
+- Create src/app/complex-dashboard/page.tsx
+```javascript
+/**
+ * Renders the Complex Dashboard page.
+ * @returns {JSX.Element} JSX element representing the Complex Dashboard page.
+ */
+export default function ComplexDashboardPage() {
+    return <h1>Complex Dashboard</h1>
+}
+```
+
+
+
+<br><br>
+<br><br>
+
+
+- Create src/components/card.tsx
+```javascript
+/**
+ * Renders a card component.
+ * @param {Object} props - The component props.
+ * @param {React.ReactNode} props.children - The content of the card.
+ * @returns {JSX.Element} The rendered card component.
+ */
+const Card = ({
+    children
+}: {
+       children: React.ReactNode
+}) => {
+    const cardStyle = {
+        padding: '100px',
+        margin: '10px',
+        boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2)',
+        border: '1px solid #ddd',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
+ 
+    return <div style={cardStyle}>{children}</div>
+}
+
+export default Card
+```
+
+
+
+<br><br>
+<br><br>
+
+#### Slots
+- Slots will not effect the url structure
+
+
+<br><br>
+
+- Create src/app/complex-dashboard/@notifications/page.tsx
+```javascript
+import Card from '@/components/card'
+
+/**
+ * Renders the Notifications page.
+ * @returns {JSX.Element} JSX element representing the Notifications page.
+ */
+export default function Notifications() {
+    return <Card>Notifications</Card>
+}
+```
+
+<br><br>
+
+- Create src/app/complex-dashboard/@revenue/page.tsx
+```javascript
+import Card from '@/components/card';
+
+/**
+ * Renders the Revenue page.
+ * @returns {JSX.Element} JSX element representing the Revenue page.
+ */
+export default function Revenue() {
+    return <Card>Revenue</Card>
+}
+```
+
+<br><br>
+
+- Create src/app/complex-dashboard/@users/page.tsx
+```javascript
+import Card from '@/components/card'
+
+/**
+ * Renders the Users page.
+ * @returns {JSX.Element} JSX element representing the Users page.
+ */
+export default function Users() {
+    return <Card>Users</Card>
+}
+```
+
+
+
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+____________________________________________________
+____________________________________________________
+<br><br>
+<br><br>
+
+
+
+
+
+## Unmatched Routes
+
+<details><summary>Click to expand..</summary>
+
+### Navigation from the UI
+- In the case of navigation within the UI, Next.js retains the previously active state of a slot regardless of changes in the URL
+  - This means other slots keep uneffected
+
+### Page reload
+- Next.js immediately searches for a default.tsx file within each unmatched slot
+   - The presence of this file is critical, as it provides the default content that Next.js will render in the UI
+     - If this default.tsx file is missing in any of the unmatched slots for the current route, Next.js will render a 404 error
+       - **This means if you will click on the archived link from the example below and then reload the page for http://localhost:3000/complex-dashboard/archived then you would get a 404**
+         - This is because there is no default.tsx file in the children:
+           - src/app/complex-dashboard/@users
+           - src/app/complex-dashboard/@revenue
+
+
+- src/app/complex-dashboard/@notifications/page.tsx
+```javascript
+import Card from '@/components/card'
+import Link from 'next/link'
+
+/**
+ * Renders the Notifications page.
+ * @returns {JSX.Element} JSX element representing the Notifications page.
+ */
+export default function Notifications() {
+    return (
+        <Card>
+            <div>Notifications</div>
+            <Link href="/complex-dashboard/archived">Archived</Link>
+        </Card>
+    )
+}
+```
+
+<br><br>
+
+- src/app/complex-dashboard/@notifications/archived/page.tsx
+```javascript
+import Card from '@/components/card'
+import Link from 'next/link'
+
+/**
+ * Renders the Archived Notifications page.
+ * @returns {JSX.Element} JSX element representing the Archived Notifications page.
+ */
+export default function ArchivedNotifications() {
+    return (
+        <Card>
+            <div>Archived Notifications</div>
+            <Link href="/complex-dashboard">Default</Link>
+        </Card>
+    )
+}
+```
+
+
+
+
+<br><br>
+<br><br>
+
+### default.tsx
+- The `default.tsx` file in Next.js serves as a fallback to render content when the framework cannot retrieve a slots active state from the current url
+- you have complete freedom to define the UI for unmatched routes. You can either mirror the content found in page.tsx or craft an entirely custom view
+
+<br><br>
+<br><br>
+
+#### Examples
+- In order to prevent 404 when you visit http://localhost:3000/complex-dashboard/archived create:
+    - src/app/complex-dashboard/default.tsx
+      - This is the fallback for the children slot
+      ```javascript
+      /**
+		 * Renders the Default Complex Dashboard page.
+		 * @returns {JSX.Element} JSX element representing the Default Complex Dashboard page.
+		 */
+		export default function DefaultComplexDashboardPage() {
+		    return <h1>Complex Dashboard</h1>
+		}
+      ```
+
+    - src/app/complex-dashboard/@users/default.tsx
+      ```javascript
+		import Card from '@/components/card'
+
+		/**
+		 * Renders the Default Users page.
+		 * @returns {JSX.Element} JSX element representing the Default Users page.
+		 */
+		export default function DefaultUsers() {
+		    return <Card>Users</Card>
+		}
+      ```
+
+    - src/app/complex-dashboard/@revenue/default.tsx
+      ```javascript
+		import Card from '@/components/card'
+
+		/**
+		 * Renders the Default Revenue page.
+		 * @returns {JSX.Element} JSX element representing the Default Revenue page.
+		 */
+		export default function DefaultRevenue() {
+		    return <Card>Revenue</Card>
+		}
+      ```
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+_________________________________________________
+_________________________________________________
+<br><br>
+<br><br>
+
+## Conditional Routes
+- Decide which content should be rendered by using conditions
+
+
+<details><summary>Click to expand..</summary>
+
+<br><br>
+
+1. Create src/app/complex-dashboard/@login/page.tsx:
+```javascript
+import Card from '@/components/card'
+
+/**
+ * Renders the Login page.
+ * @returns {JSX.Element} JSX element representing the Login page.
+ */
+export default function Login() {
+    return <Card>Login</Card>
+}
+```
+
+<br><br>
+
+2. Import new login slot to src/app/complex-dashboard/layout.tsx:
+- If isLoggedIn=false then the login slot will be rendered
+```javascript
+/**
+ * Dashboard layout component.
+ *
+ * @param {Object} props - The component props.
+ * @param {React.ReactNode} props.children - The child components to render.
+ * @param {React.ReactNode} props.users - The users component to render.
+ * @param {React.ReactNode} props.revenue - The revenue component to render.
+ * @param {React.ReactNode} props.notifications - The notifications component to render.
+  * @param {React.ReactNode} props.login - The login component to render.
+ * @returns {JSX.Element} The rendered Dashboard layout.
+ */
+export default function DashboardLayout({
+    children,
+    users,
+    revenue,
+    login,
+    notifications
+}: {
+     children: React.ReactNode;
+     users: React.ReactNode;
+     revenue: React.ReactNode;
+     login: React.ReactNode;
+     notifications: React.ReactNode;
+}) {
+    const isLoggedIn = false
+
+    return isLoggedIn ? (
+        <div>
+            <div>{children}</div>
+
+            <div style={{ display: 'flex' }}>
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <div>{users}</div>
+                    <div>{revenue}</div>
+                </div>
+
+                <div style={{ display: 'flex', flex: 1 }}>
+                    <div>{notifications}</div>
+                </div>
+            </div>
+        </div>
+    ) : ( 
+        <div>
+            <h1>Sign-in</h1>
+            <div>{login}</div>
+        </div>
+    )
+}
+```
+
+
+
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+___________________________________
+___________________________________
+<br><br>
+
+
+
+
+
+## Intercepting Routes
+- Intercepting routes allow you to intercept or stop the default routing behaviour to present an alternate view or component when navigating through the UI, while still preserving the indended route for scenarious like page reload
+  - This can be useful if you want to show a route while keeping the context of the current page
+    - **This means if you want e.g. to open a image from a gallery within the same site on a modal box**
+    - If you reload the page or somebody opens this url directly then they will be redirected to the original component and not the inetrcepted
+
+<br><br>
+<br><br>
+
+<details><summary>Click to expand..</summary>
+
+
+### Conventions
+- (.) to match segments on the same level
+  - The folder must be on the same layer where the original folder is
+
+- (..) to match segments one level above
+
+- (..)(..) to match segments two level above
+
+- (...) to match segments from the root app directory
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+### (.)
+
+Create `src/app/f1/page.tsx`:
+```javascript
+import Link from 'next/link'
+
+/**
+ * Renders the F1 page.
+ * @returns {JSX.Element} JSX element representing the F1 page.
+ */
+export default function F1() {
+    return (
+        <>
+            <h1>F1 Page</h1>
+            <div>
+                <Link href="/f1/f2">F2</Link>
+            </div>
+        </>
+    )
+}
+```
+
+<br><br>
+<br><br>
+
+
+Create src/app/f1/f2/page.tsx:
+```javascript
+/**
+ * Renders the F2 page.
+ * @returns {JSX.Element} JSX element representing the F2 page.
+ */
+export default function F2() {
+    return <h1>F2</h1>
+}
+```
+
+
+<br><br>
+<br><br>
+
+Create src/app/f1/(.)f2/page.tsx:
+```javascript
+/**
+ * Renders the Intercepted F2 page.
+ * @returns {JSX.Element} JSX element representing the Intercepted F2 page.
+ */
+export default function InterceptedF2() {
+    return <h1>(.) Intercepted F2</h1>
+}
+```
+- If you visit now `http://localhost:3000/f1/f2` you can see that `src/app/f1/(.)f2/page.tsx` will intercept the route
+- **If you reload the page now you will see content of `src/app/f1/f2/page.tsx`**
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+
+### (..)
+
+<br><br>
+
+Create src/app/f3/page.tsx:
+```javascript
+/**
+ * Renders the F3 page.
+ * @returns {JSX.Element} JSX element representing the F3 page.
+ */
+export default function F3() {
+    return <h1>F3</h1>
+}
+```
+
+
+<br><br>
+<br><br>
+
+Create src/app/f1/f4/page.tsx:
+```javascript
+import Link from 'next/link'
+
+/**
+ * Renders the F4 page.
+ * @returns {JSX.Element} JSX element representing the F4 page.
+ */
+export default function F4() {
+    return (
+        <>
+            <h1>F4 Page</h1>
+            <div>
+                <Link href="/f1/f3">F3</Link>
+            </div>
+        </>
+    )
+}
+```
+
+<br><br>
+<br><br>
+
+Create src/app/f1/f4/(..)f3/page.tsx:
+```javascript
+/**
+ * Renders the Intercepted F3 page.
+ * @returns {JSX.Element} JSX element representing the Intercepted F3 page.
+ */
+export default function InterceptedF3() {
+    return <h1>(..) Intercepted F3</h1>
+}
+```
+- If you visit now `http://localhost:3000/f1/f4` you will see the content of `src/app/f1/f4/page.tsx`
+  - If you click on the f3 Link you will get intercepted by `src/app/f1/f4/(..)f3/page.tsx`
+- **If you reload the page now you will see content of `src/app/f1/f3/page.tsx`**
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+
+### (...)
+- Lets say we need to intercept `src/about/page.tsx` folder while navigating through the `src/app/f1/f4/page.tsx`
+  - Create `src/f1/f4/(...)about/page.tsx`:
+  ```javascript
+   /**
+	 * Renders the Intercepted About page.
+	 * @returns {JSX.Element} JSX element representing the Intercepted About page.
+	 */
+	export default function InterceptedAbout() {
+	    return <h1>(..) Intercepted About</h1>
+	}
+  ```
+
+  - Add Link to about:
+  ```javascript
+    import Link from 'next/link'
+  
+	/**
+	 * Renders the F4 page.
+	 * @returns {JSX.Element} JSX element representing the F4 page.
+	 */
+	export default function F4() {
+	    return (
+	        <>
+	            <h1>F4 Page</h1>
+	            <div>
+	                <Link href="/f1/f3">F3</Link>
+	                <Link href="/about">About</Link>
+	            </div>
+	        </>
+	    )
+	}
+  ```
+    - If you visit now `http://localhost:3000/f1/f4` you will see the content of `src/app/f1/f4/page.tsx`
+    - If you click on the about Link you will get intercepted by ``src/f1/f4/(...)about/page.tsx``
+    - **If you reload the page now you will see content of `src/app/about/page.tsx`**
+
+
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+_________________________________________________________
+_________________________________________________________
+<br><br>
+<br><br>
+
+
+
+
+
+## Parallel Intercepting Routes
+- https://www.youtube.com/watch?v=mVOvx9eVHg0&list=PLC3y8-rFHvwjOKd6gdf4QtV1uYNiQnruI&index=32
+
+<br><br>
+
+<details><summary>Click to expand..</summary>
+
+1. Clone Project:
+- https://github.com/gopinav/Next.js-14-Tutorials
+
+<br><br>
+
+2. Copy `src/app/photo-feed` into your project
+
+<br><br>
+
+3. Copy `src/components/modal.tsx` into your project:
+```javascript
+'use client'
+import { useCallback, useRef, useEffect, MouseEventHandler } from 'react'
+import { useRouter } from 'next/navigation'
+
+/**
+ * Modal component.
+ *
+ * @param {{ children: React.ReactNode }} props - The props for the Modal component.
+ * @returns {JSX.Element} The rendered Modal component.
+ */
+export default function Modal({ children }: { children: React.ReactNode }) {
+    const overlay = useRef(null)
+    const wrapper = useRef(null)
+    const router = useRouter()
+
+    const onDismiss = useCallback(() => {
+        router.back()
+    }, [router])
+
+    const onClick: MouseEventHandler = useCallback(
+        e => {
+            if (e.target === overlay.current || e.target === wrapper.current) {
+                if (onDismiss) onDismiss()
+            }
+        },
+        [onDismiss, overlay, wrapper]
+    )
+
+    const onKeyDown = useCallback(
+        (e: KeyboardEvent) => {
+            if (e.key === 'Escape') onDismiss()
+        },
+        [onDismiss]
+    )
+
+    useEffect(() => {
+        document.addEventListener('keydown', onKeyDown)
+        return () => document.removeEventListener('keydown', onKeyDown)
+    }, [onKeyDown])
+
+    return (
+        <div
+            ref={overlay}
+            className="fixed z-10 left-0 right-0 top-0 bottom-0 mx-auto bg-black/60 p-10"
+            onClick={onClick}
+        >
+            <div
+                ref={wrapper}
+                // eslint-disable-next-line max-len
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 sm:w-10/12 md:w-8/12 lg:w-2/5 p-6"
+            >
+                {children}
+            </div>
+        </div>
+    )
+}
+```
+
+<br><br>
+
+4. Check `src/app/photo-feed/wonders.ts` to understand how it works:
+```javascript
+import { StaticImageData } from 'next/image'
+import photo1 from './photos/1.jpg'
+import photo2 from './photos/2.jpg'
+import photo3 from './photos/3.jpg'
+import photo4 from './photos/4.jpg'
+import photo5 from './photos/5.jpg'
+import photo6 from './photos/6.jpg'
+import photo7 from './photos/7.jpg'
+
+export type WonderImage = {
+  id: string;
+  name: string;
+  src: StaticImageData;
+  photographer: string;
+  location: string;
+};
+
+const wondersImages: WonderImage[] = [
+    {
+        id: '1',
+        name: 'Great Wall of China',
+        src: photo1,
+        photographer: 'Photo by Max van den Oetelaar on Unsplash',
+        location: 'China'
+    },
+    {
+        id: '2',
+        name: 'Petra',
+        src: photo2,
+        photographer: 'Photo by Reiseuhu on Unsplash',
+        location: 'Jordan'
+    },
+    {
+        id: '3',
+        name: 'Christ the Redeemer',
+        src: photo3,
+        photographer: 'Photo by Andrea Leopardi on Unsplash',
+        location: 'Brazil'
+    },
+    {
+        id: '4',
+        name: 'Machu Picchu',
+        src: photo4,
+        photographer: 'Photo by Jared Schwitzke on Unsplash',
+        location: 'Peru'
+    },
+    {
+        id: '5',
+        name: 'Chichen Itza',
+        src: photo5,
+        photographer: 'Photo by E Mens on Unsplash',
+        location: 'Mexico'
+    },
+    {
+        id: '6',
+        name: 'Roman Colosseum',
+        src: photo6,
+        photographer: 'Photo by Andrea Cipriano on Unsplash',
+        location: 'Italy'
+    },
+    {
+        id: '7',
+        name: 'Taj Mahal',
+        src: photo7,
+        photographer: 'Photo by Su San Lee on Unsplash',
+        location: 'India'
+    }
+]
+
+export default wondersImages
+```
+
+<br><br>
+
+5. Check `src/app/photo-feed/page.tsx` to understand how it works:
+```javascript
+import Link from 'next/link'
+import wonders from './wonders'
+import Image from 'next/image'
+
+/**
+ * Renders the home page of the photo feed.
+ * Displays a grid of new wonders of the world with their images and names.
+ * @returns {JSX.Element} The rendered home page component.
+ */
+export default function Home() {
+    return (
+        <main className="container mx-auto">
+            <h1 className="text-center text-3xl font-bold my-4">
+        New Wonders of the World
+            </h1>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                {wonders.map(({ id, src, name }) => (
+                    <Link key={id} href={`/photo-feed/${id}`}>
+                        <Image
+                            alt={name}
+                            src={src}
+                            className="w-full object-cover aspect-square"
+                        />
+                    </Link>
+                ))}
+            </div>
+        </main>
+    )
+}
+```
+- Each image is linked with the link component
+
+<br><br>
+
+
+6. Check `src/app/photo-feed/[id]/page.tsx` to understand how it works:
+```
+import Image from 'next/image'
+import wondersImages, { WonderImage } from '../wonders'
+
+/**
+ * Renders the page for a specific photo.
+ * 
+ * @param {Object} props - The component props.
+ * @param {Object} props.params - The parameters object.
+ * @param {string} props.params.id - The ID of the photo.
+ * @returns {JSX.Element} The rendered photo page.
+ */
+export default function PhotoPage({
+    params: { id }
+}: {
+  params: { id: string };
+}) {
+    const photo: WonderImage = wondersImages.find(p => p.id === id)!
+    return (
+        <div className="container mx-auto my-10">
+            <div className="w-1/2 mx-auto">
+                <div>
+                    <h1 className="text-center text-3xl font-bold my-4">{photo.name}</h1>
+                </div>
+                <Image
+                    alt={photo.name}
+                    src={photo.src}
+                    className="w-full object-cover aspect-square "
+                />
+
+                <div className="bg-white py-4">
+                    <h3>{photo.photographer}</h3>
+                    <h3>{photo.location}</h3>
+                </div>
+            </div>
+        </div>
+    )
+}
+```
+- E.g. http://localhost:3000/photo-feed/2 will load image 2 of your image array
+
+
+<br><br>
+
+
+7. Check `src/app/photo-feed/@modal/(..)photo-feed/[id]/page.tsx` to understand how it works:
+```javascript
+import Image from 'next/image'
+import wondersImages, { WonderImage } from '../../../wonders'
+import Modal from '@/components/modal'
+
+/**
+ * Renders a modal component displaying details of a photo.
+ *
+ * @param {Object} props - The component props.
+ * @param {Object} props.params - The parameters object.
+ * @param {string} props.params.id - The ID of the photo.
+ * @returns {JSX.Element} The rendered modal component.
+ */
+export default function PhotoModal({
+    params: { id }
+}: {
+  params: { id: string };
+}) {
+    const photo: WonderImage = wondersImages.find(p => p.id === id)!
+
+    return (
+        <Modal>
+            <Image
+                alt={photo.name}
+                src={photo.src}
+                className="w-full object-cover aspect-square"
+            />
+
+            <div className="bg-white p-4">
+                <h2 className="text-xl font-semibold">{photo.name}</h2>
+                <h3>{photo.photographer}</h3>
+                <h3>{photo.location}</h3>
+            </div>
+        </Modal>
+    )
+}
+```
+- This means if you click on an image the interception will fire and load the image by using `src/app/photo-feed/@modal/(..)photo-feed/[id]/page.tsx`
+- If you reload the page then it uses `src/app/photo-feed/[id]/page.tsx`
+
+
+
+
+
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </details>
 
 
@@ -2469,1115 +3602,6 @@ This means any error which happen in e.g. http://localhost:3000/products/1/revie
 
 
 
-<br><br>
-<br><br>
-____________________________________________________
-____________________________________________________
-<br><br>
-<br><br>
-
-
-## Parallel Routes
-- Parallel routes are an advanced routing mechanism that akkiws for the simultaneous rendering of multiple pages withing the same layout
-  - Image you would build an dashboard with multiple components e.g.:
-    - Notifications
-    - User analytics
-    - Revenue metrics
-
-- Parallel routes are defined using a feature known as slots
-  - Slots help structure our content in a modular fashion
-  - To define a slot, we use the `@folder` naming convention
-  - Each slot in then passed as a prop to its corresponding `layout.tsx` file
-
-
-<details><summary>Click to expand..</summary>
-
-<br><br>
-
-### Benefits
-- A clear benefit is their ability to split a single layout into various slots, making the code more manageable
-- Independent route handling
-- Sub-navigation
-
-
-<br><br>
-
-
-### Independent route handling
-- Each slot of your layout, such as user analytics or revenue metrics, can have its own loading and error states
-- This granular control is particulary beneficial in scenarios where different sections of the page load at varying speeds or encounter unique errors
-
-
-<br><br>
-
-
-### Sub-navigation in routes
-- Each slot of your dashboard can essentially function as a mini-application, complete with its own navigation and state management
-- This is especially useful in a complex application such as our dashboard where different sections service disctinct purposes
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<br><br>
-<br><br>
-____________________________________________________
-____________________________________________________
-<br><br>
-<br><br>
-
-
-
-
-
-
-
-
-<br><br>
-<br><br>
-
-### Example
-- Create src/app/complex-dashboard/layout.tsx
-```javascript
-/**
- * Dashboard layout component.
- *
- * @param {Object} props - The component props.
- * @param {React.ReactNode} props.children - The child components to render.
- * @param {React.ReactNode} props.users - The users component to render.
- * @param {React.ReactNode} props.revenue - The revenue component to render.
- * @param {React.ReactNode} props.notifications - The notifications component to render.
- * @returns {JSX.Element} The rendered Dashboard layout.
- */
-export default function DashboardLayout({
-    children,
-    users,
-    revenue,
-    notifications
-}: {
-     children: React.ReactNode;
-     users: React.ReactNode;
-     revenue: React.ReactNode;
-     notifications: React.ReactNode;
-}) {
-    return (
-        <div>
-            <div>{children}</div>
-
-            <div style={{ display: ''flex }}>
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <div>{users}</div>
-                    <div>{revenue}</div>
-                </div>
-
-                <div style={{ display: 'flex', flex: 1 }}>
-                    <div>{notifications}</div>
-                </div>
-            </div>
-        </div>
-    )
-}
-```
-- children is equal to complex-dashboard/@children/page.tsx
-  - So technically e have 4 slots inside of our layout file
-
-
-<br><br>
-<br><br>
-
-- Create src/app/complex-dashboard/page.tsx
-```javascript
-/**
- * Renders the Complex Dashboard page.
- * @returns {JSX.Element} JSX element representing the Complex Dashboard page.
- */
-export default function ComplexDashboardPage() {
-    return <h1>Complex Dashboard</h1>
-}
-```
-
-
-
-<br><br>
-<br><br>
-
-
-- Create src/components/card.tsx
-```javascript
-/**
- * Renders a card component.
- * @param {Object} props - The component props.
- * @param {React.ReactNode} props.children - The content of the card.
- * @returns {JSX.Element} The rendered card component.
- */
-const Card = ({
-    children
-}: {
-       children: React.ReactNode
-}) => {
-    const cardStyle = {
-        padding: '100px',
-        margin: '10px',
-        boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2)',
-        border: '1px solid #ddd',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
- 
-    return <div style={cardStyle}>{children}</div>
-}
-
-export default Card
-```
-
-
-
-<br><br>
-<br><br>
-
-#### Slots
-- Slots will not effect the url structure
-
-
-<br><br>
-
-- Create src/app/complex-dashboard/@notifications/page.tsx
-```javascript
-import Card from '@/components/card'
-
-/**
- * Renders the Notifications page.
- * @returns {JSX.Element} JSX element representing the Notifications page.
- */
-export default function Notifications() {
-    return <Card>Notifications</Card>
-}
-```
-
-<br><br>
-
-- Create src/app/complex-dashboard/@revenue/page.tsx
-```javascript
-import Card from '@/components/card';
-
-/**
- * Renders the Revenue page.
- * @returns {JSX.Element} JSX element representing the Revenue page.
- */
-export default function Revenue() {
-    return <Card>Revenue</Card>
-}
-```
-
-<br><br>
-
-- Create src/app/complex-dashboard/@users/page.tsx
-```javascript
-import Card from '@/components/card'
-
-/**
- * Renders the Users page.
- * @returns {JSX.Element} JSX element representing the Users page.
- */
-export default function Users() {
-    return <Card>Users</Card>
-}
-```
-
-
-
-</details>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<br><br>
-<br><br>
-____________________________________________________
-____________________________________________________
-<br><br>
-<br><br>
-
-
-
-
-
-## Unmatched Routes
-
-<details><summary>Click to expand..</summary>
-
-### Navigation from the UI
-- In the case of navigation within the UI, Next.js retains the previously active state of a slot regardless of changes in the URL
-  - This means other slots keep uneffected
-
-### Page reload
-- Next.js immediately searches for a default.tsx file within each unmatched slot
-   - The presence of this file is critical, as it provides the default content that Next.js will render in the UI
-     - If this default.tsx file is missing in any of the unmatched slots for the current route, Next.js will render a 404 error
-       - **This means if you will click on the archived link from the example below and then reload the page for http://localhost:3000/complex-dashboard/archived then you would get a 404**
-         - This is because there is no default.tsx file in the children:
-           - src/app/complex-dashboard/@users
-           - src/app/complex-dashboard/@revenue
-
-
-- src/app/complex-dashboard/@notifications/page.tsx
-```javascript
-import Card from '@/components/card'
-import Link from 'next/link'
-
-/**
- * Renders the Notifications page.
- * @returns {JSX.Element} JSX element representing the Notifications page.
- */
-export default function Notifications() {
-    return (
-        <Card>
-            <div>Notifications</div>
-            <Link href="/complex-dashboard/archived">Archived</Link>
-        </Card>
-    )
-}
-```
-
-<br><br>
-
-- src/app/complex-dashboard/@notifications/archived/page.tsx
-```javascript
-import Card from '@/components/card'
-import Link from 'next/link'
-
-/**
- * Renders the Archived Notifications page.
- * @returns {JSX.Element} JSX element representing the Archived Notifications page.
- */
-export default function ArchivedNotifications() {
-    return (
-        <Card>
-            <div>Archived Notifications</div>
-            <Link href="/complex-dashboard">Default</Link>
-        </Card>
-    )
-}
-```
-
-
-
-
-<br><br>
-<br><br>
-
-### default.tsx
-- The `default.tsx` file in Next.js serves as a fallback to render content when the framework cannot retrieve a slots active state from the current url
-- you have complete freedom to define the UI for unmatched routes. You can either mirror the content found in page.tsx or craft an entirely custom view
-
-<br><br>
-<br><br>
-
-#### Examples
-- In order to prevent 404 when you visit http://localhost:3000/complex-dashboard/archived create:
-    - src/app/complex-dashboard/default.tsx
-      - This is the fallback for the children slot
-      ```javascript
-      /**
-		 * Renders the Default Complex Dashboard page.
-		 * @returns {JSX.Element} JSX element representing the Default Complex Dashboard page.
-		 */
-		export default function DefaultComplexDashboardPage() {
-		    return <h1>Complex Dashboard</h1>
-		}
-      ```
-
-    - src/app/complex-dashboard/@users/default.tsx
-      ```javascript
-		import Card from '@/components/card'
-
-		/**
-		 * Renders the Default Users page.
-		 * @returns {JSX.Element} JSX element representing the Default Users page.
-		 */
-		export default function DefaultUsers() {
-		    return <Card>Users</Card>
-		}
-      ```
-
-    - src/app/complex-dashboard/@revenue/default.tsx
-      ```javascript
-		import Card from '@/components/card'
-
-		/**
-		 * Renders the Default Revenue page.
-		 * @returns {JSX.Element} JSX element representing the Default Revenue page.
-		 */
-		export default function DefaultRevenue() {
-		    return <Card>Revenue</Card>
-		}
-      ```
-</details>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<br><br>
-<br><br>
-_________________________________________________
-_________________________________________________
-<br><br>
-<br><br>
-
-## Conditional Routes
-- Decide which content should be rendered by using conditions
-
-
-<details><summary>Click to expand..</summary>
-
-<br><br>
-
-1. Create src/app/complex-dashboard/@login/page.tsx:
-```javascript
-import Card from '@/components/card'
-
-/**
- * Renders the Login page.
- * @returns {JSX.Element} JSX element representing the Login page.
- */
-export default function Login() {
-    return <Card>Login</Card>
-}
-```
-
-<br><br>
-
-2. Import new login slot to src/app/complex-dashboard/layout.tsx:
-- If isLoggedIn=false then the login slot will be rendered
-```javascript
-/**
- * Dashboard layout component.
- *
- * @param {Object} props - The component props.
- * @param {React.ReactNode} props.children - The child components to render.
- * @param {React.ReactNode} props.users - The users component to render.
- * @param {React.ReactNode} props.revenue - The revenue component to render.
- * @param {React.ReactNode} props.notifications - The notifications component to render.
-  * @param {React.ReactNode} props.login - The login component to render.
- * @returns {JSX.Element} The rendered Dashboard layout.
- */
-export default function DashboardLayout({
-    children,
-    users,
-    revenue,
-    login,
-    notifications
-}: {
-     children: React.ReactNode;
-     users: React.ReactNode;
-     revenue: React.ReactNode;
-     login: React.ReactNode;
-     notifications: React.ReactNode;
-}) {
-    const isLoggedIn = false
-
-    return isLoggedIn ? (
-        <div>
-            <div>{children}</div>
-
-            <div style={{ display: 'flex' }}>
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <div>{users}</div>
-                    <div>{revenue}</div>
-                </div>
-
-                <div style={{ display: 'flex', flex: 1 }}>
-                    <div>{notifications}</div>
-                </div>
-            </div>
-        </div>
-    ) : ( 
-        <div>
-            <h1>Sign-in</h1>
-            <div>{login}</div>
-        </div>
-    )
-}
-```
-
-
-
-</details>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<br><br>
-___________________________________
-___________________________________
-<br><br>
-
-
-
-
-
-## Intercepting Routes
-- Intercepting routes allow you to intercept or stop the default routing behaviour to present an alternate view or component when navigating through the UI, while still preserving the indended route for scenarious like page reload
-  - This can be useful if you want to show a route while keeping the context of the current page
-    - **This means if you want e.g. to open a image from a gallery within the same site on a modal box**
-    - If you reload the page or somebody opens this url directly then they will be redirected to the original component and not the inetrcepted
-
-<br><br>
-<br><br>
-
-<details><summary>Click to expand..</summary>
-
-
-### Conventions
-- (.) to match segments on the same level
-  - The folder must be on the same layer where the original folder is
-
-- (..) to match segments one level above
-
-- (..)(..) to match segments two level above
-
-- (...) to match segments from the root app directory
-
-
-
-
-
-
-
-<br><br>
-<br><br>
-
-### (.)
-
-Create `src/app/f1/page.tsx`:
-```javascript
-import Link from 'next/link'
-
-/**
- * Renders the F1 page.
- * @returns {JSX.Element} JSX element representing the F1 page.
- */
-export default function F1() {
-    return (
-        <>
-            <h1>F1 Page</h1>
-            <div>
-                <Link href="/f1/f2">F2</Link>
-            </div>
-        </>
-    )
-}
-```
-
-<br><br>
-<br><br>
-
-
-Create src/app/f1/f2/page.tsx:
-```javascript
-/**
- * Renders the F2 page.
- * @returns {JSX.Element} JSX element representing the F2 page.
- */
-export default function F2() {
-    return <h1>F2</h1>
-}
-```
-
-
-<br><br>
-<br><br>
-
-Create src/app/f1/(.)f2/page.tsx:
-```javascript
-/**
- * Renders the Intercepted F2 page.
- * @returns {JSX.Element} JSX element representing the Intercepted F2 page.
- */
-export default function InterceptedF2() {
-    return <h1>(.) Intercepted F2</h1>
-}
-```
-- If you visit now `http://localhost:3000/f1/f2` you can see that `src/app/f1/(.)f2/page.tsx` will intercept the route
-- **If you reload the page now you will see content of `src/app/f1/f2/page.tsx`**
-
-
-
-
-
-
-
-
-
-<br><br>
-<br><br>
-
-
-### (..)
-
-<br><br>
-
-Create src/app/f3/page.tsx:
-```javascript
-/**
- * Renders the F3 page.
- * @returns {JSX.Element} JSX element representing the F3 page.
- */
-export default function F3() {
-    return <h1>F3</h1>
-}
-```
-
-
-<br><br>
-<br><br>
-
-Create src/app/f1/f4/page.tsx:
-```javascript
-import Link from 'next/link'
-
-/**
- * Renders the F4 page.
- * @returns {JSX.Element} JSX element representing the F4 page.
- */
-export default function F4() {
-    return (
-        <>
-            <h1>F4 Page</h1>
-            <div>
-                <Link href="/f1/f3">F3</Link>
-            </div>
-        </>
-    )
-}
-```
-
-<br><br>
-<br><br>
-
-Create src/app/f1/f4/(..)f3/page.tsx:
-```javascript
-/**
- * Renders the Intercepted F3 page.
- * @returns {JSX.Element} JSX element representing the Intercepted F3 page.
- */
-export default function InterceptedF3() {
-    return <h1>(..) Intercepted F3</h1>
-}
-```
-- If you visit now `http://localhost:3000/f1/f4` you will see the content of `src/app/f1/f4/page.tsx`
-  - If you click on the f3 Link you will get intercepted by `src/app/f1/f4/(..)f3/page.tsx`
-- **If you reload the page now you will see content of `src/app/f1/f3/page.tsx`**
-
-
-
-
-
-
-
-
-
-<br><br>
-<br><br>
-
-
-### (...)
-- Lets say we need to intercept `src/about/page.tsx` folder while navigating through the `src/app/f1/f4/page.tsx`
-  - Create `src/f1/f4/(...)about/page.tsx`:
-  ```javascript
-   /**
-	 * Renders the Intercepted About page.
-	 * @returns {JSX.Element} JSX element representing the Intercepted About page.
-	 */
-	export default function InterceptedAbout() {
-	    return <h1>(..) Intercepted About</h1>
-	}
-  ```
-
-  - Add Link to about:
-  ```javascript
-    import Link from 'next/link'
-  
-	/**
-	 * Renders the F4 page.
-	 * @returns {JSX.Element} JSX element representing the F4 page.
-	 */
-	export default function F4() {
-	    return (
-	        <>
-	            <h1>F4 Page</h1>
-	            <div>
-	                <Link href="/f1/f3">F3</Link>
-	                <Link href="/about">About</Link>
-	            </div>
-	        </>
-	    )
-	}
-  ```
-    - If you visit now `http://localhost:3000/f1/f4` you will see the content of `src/app/f1/f4/page.tsx`
-    - If you click on the about Link you will get intercepted by ``src/f1/f4/(...)about/page.tsx``
-    - **If you reload the page now you will see content of `src/app/about/page.tsx`**
-
-
-</details>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<br><br>
-<br><br>
-_________________________________________________________
-_________________________________________________________
-<br><br>
-<br><br>
-
-
-
-
-
-## Parallel Intercepting Routes
-- https://www.youtube.com/watch?v=mVOvx9eVHg0&list=PLC3y8-rFHvwjOKd6gdf4QtV1uYNiQnruI&index=32
-
-<br><br>
-
-<details><summary>Click to expand..</summary>
-
-1. Clone Project:
-- https://github.com/gopinav/Next.js-14-Tutorials
-
-<br><br>
-
-2. Copy `src/app/photo-feed` into your project
-
-<br><br>
-
-3. Copy `src/components/modal.tsx` into your project:
-```javascript
-'use client'
-import { useCallback, useRef, useEffect, MouseEventHandler } from 'react'
-import { useRouter } from 'next/navigation'
-
-/**
- * Modal component.
- *
- * @param {{ children: React.ReactNode }} props - The props for the Modal component.
- * @returns {JSX.Element} The rendered Modal component.
- */
-export default function Modal({ children }: { children: React.ReactNode }) {
-    const overlay = useRef(null)
-    const wrapper = useRef(null)
-    const router = useRouter()
-
-    const onDismiss = useCallback(() => {
-        router.back()
-    }, [router])
-
-    const onClick: MouseEventHandler = useCallback(
-        e => {
-            if (e.target === overlay.current || e.target === wrapper.current) {
-                if (onDismiss) onDismiss()
-            }
-        },
-        [onDismiss, overlay, wrapper]
-    )
-
-    const onKeyDown = useCallback(
-        (e: KeyboardEvent) => {
-            if (e.key === 'Escape') onDismiss()
-        },
-        [onDismiss]
-    )
-
-    useEffect(() => {
-        document.addEventListener('keydown', onKeyDown)
-        return () => document.removeEventListener('keydown', onKeyDown)
-    }, [onKeyDown])
-
-    return (
-        <div
-            ref={overlay}
-            className="fixed z-10 left-0 right-0 top-0 bottom-0 mx-auto bg-black/60 p-10"
-            onClick={onClick}
-        >
-            <div
-                ref={wrapper}
-                // eslint-disable-next-line max-len
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 sm:w-10/12 md:w-8/12 lg:w-2/5 p-6"
-            >
-                {children}
-            </div>
-        </div>
-    )
-}
-```
-
-<br><br>
-
-4. Check `src/app/photo-feed/wonders.ts` to understand how it works:
-```javascript
-import { StaticImageData } from 'next/image'
-import photo1 from './photos/1.jpg'
-import photo2 from './photos/2.jpg'
-import photo3 from './photos/3.jpg'
-import photo4 from './photos/4.jpg'
-import photo5 from './photos/5.jpg'
-import photo6 from './photos/6.jpg'
-import photo7 from './photos/7.jpg'
-
-export type WonderImage = {
-  id: string;
-  name: string;
-  src: StaticImageData;
-  photographer: string;
-  location: string;
-};
-
-const wondersImages: WonderImage[] = [
-    {
-        id: '1',
-        name: 'Great Wall of China',
-        src: photo1,
-        photographer: 'Photo by Max van den Oetelaar on Unsplash',
-        location: 'China'
-    },
-    {
-        id: '2',
-        name: 'Petra',
-        src: photo2,
-        photographer: 'Photo by Reiseuhu on Unsplash',
-        location: 'Jordan'
-    },
-    {
-        id: '3',
-        name: 'Christ the Redeemer',
-        src: photo3,
-        photographer: 'Photo by Andrea Leopardi on Unsplash',
-        location: 'Brazil'
-    },
-    {
-        id: '4',
-        name: 'Machu Picchu',
-        src: photo4,
-        photographer: 'Photo by Jared Schwitzke on Unsplash',
-        location: 'Peru'
-    },
-    {
-        id: '5',
-        name: 'Chichen Itza',
-        src: photo5,
-        photographer: 'Photo by E Mens on Unsplash',
-        location: 'Mexico'
-    },
-    {
-        id: '6',
-        name: 'Roman Colosseum',
-        src: photo6,
-        photographer: 'Photo by Andrea Cipriano on Unsplash',
-        location: 'Italy'
-    },
-    {
-        id: '7',
-        name: 'Taj Mahal',
-        src: photo7,
-        photographer: 'Photo by Su San Lee on Unsplash',
-        location: 'India'
-    }
-]
-
-export default wondersImages
-```
-
-<br><br>
-
-5. Check `src/app/photo-feed/page.tsx` to understand how it works:
-```javascript
-import Link from 'next/link'
-import wonders from './wonders'
-import Image from 'next/image'
-
-/**
- * Renders the home page of the photo feed.
- * Displays a grid of new wonders of the world with their images and names.
- * @returns {JSX.Element} The rendered home page component.
- */
-export default function Home() {
-    return (
-        <main className="container mx-auto">
-            <h1 className="text-center text-3xl font-bold my-4">
-        New Wonders of the World
-            </h1>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                {wonders.map(({ id, src, name }) => (
-                    <Link key={id} href={`/photo-feed/${id}`}>
-                        <Image
-                            alt={name}
-                            src={src}
-                            className="w-full object-cover aspect-square"
-                        />
-                    </Link>
-                ))}
-            </div>
-        </main>
-    )
-}
-```
-- Each image is linked with the link component
-
-<br><br>
-
-
-6. Check `src/app/photo-feed/[id]/page.tsx` to understand how it works:
-```
-import Image from 'next/image'
-import wondersImages, { WonderImage } from '../wonders'
-
-/**
- * Renders the page for a specific photo.
- * 
- * @param {Object} props - The component props.
- * @param {Object} props.params - The parameters object.
- * @param {string} props.params.id - The ID of the photo.
- * @returns {JSX.Element} The rendered photo page.
- */
-export default function PhotoPage({
-    params: { id }
-}: {
-  params: { id: string };
-}) {
-    const photo: WonderImage = wondersImages.find(p => p.id === id)!
-    return (
-        <div className="container mx-auto my-10">
-            <div className="w-1/2 mx-auto">
-                <div>
-                    <h1 className="text-center text-3xl font-bold my-4">{photo.name}</h1>
-                </div>
-                <Image
-                    alt={photo.name}
-                    src={photo.src}
-                    className="w-full object-cover aspect-square "
-                />
-
-                <div className="bg-white py-4">
-                    <h3>{photo.photographer}</h3>
-                    <h3>{photo.location}</h3>
-                </div>
-            </div>
-        </div>
-    )
-}
-```
-- E.g. http://localhost:3000/photo-feed/2 will load image 2 of your image array
-
-
-<br><br>
-
-
-7. Check `src/app/photo-feed/@modal/(..)photo-feed/[id]/page.tsx` to understand how it works:
-```javascript
-import Image from 'next/image'
-import wondersImages, { WonderImage } from '../../../wonders'
-import Modal from '@/components/modal'
-
-/**
- * Renders a modal component displaying details of a photo.
- *
- * @param {Object} props - The component props.
- * @param {Object} props.params - The parameters object.
- * @param {string} props.params.id - The ID of the photo.
- * @returns {JSX.Element} The rendered modal component.
- */
-export default function PhotoModal({
-    params: { id }
-}: {
-  params: { id: string };
-}) {
-    const photo: WonderImage = wondersImages.find(p => p.id === id)!
-
-    return (
-        <Modal>
-            <Image
-                alt={photo.name}
-                src={photo.src}
-                className="w-full object-cover aspect-square"
-            />
-
-            <div className="bg-white p-4">
-                <h2 className="text-xl font-semibold">{photo.name}</h2>
-                <h3>{photo.photographer}</h3>
-                <h3>{photo.location}</h3>
-            </div>
-        </Modal>
-    )
-}
-```
-- This means if you click on an image the interception will fire and load the image by using `src/app/photo-feed/@modal/(..)photo-feed/[id]/page.tsx`
-- If you reload the page then it uses `src/app/photo-feed/[id]/page.tsx`
-
-
-
-
-
-</details>
 
 
 
